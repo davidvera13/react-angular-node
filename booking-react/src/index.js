@@ -29,6 +29,6 @@ const countElement = document.getElementById('counter')
 // }
 // ReactDOM.render(React.createElement(App, {className: 'title'}, null), rootElement)
 ReactDOM.render(<App className = 'title' />, rootElement)
-ReactDOM.render(<CounterApp />, countElement)
+ReactDOM.render(<CounterApp title='My Counter app' />, countElement)
 
 reportWebVitals();
