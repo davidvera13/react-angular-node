@@ -1,6 +1,9 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import CounterView from "./CounterView";
+
+// set is an object that keep only unique data
+const functions = new Set();
 
 const CounterApp = (props) => {
     const[count, setCount] = useState(0);
@@ -12,12 +15,18 @@ const CounterApp = (props) => {
         console.log('useEffect called')
     }, [count])
 
-    const modify = (step) => {
+    // const modify = (step) => {
+    //     setCount(count + step);
+    // }
+    // const doWhatever = () => setWhatever(whatever + 1)
+
+    const modify = useCallback((step) => {
         setCount(count + step);
-    }
-    const doWhatever = () => setWhatever(whatever + 1)
+    }, [count]);
+    const doWhatever = useCallback(() => setWhatever(whatever + 1), [whatever]);
 
-
+    functions.add(modify);
+    functions.add(whatever)
 
 
     return (
@@ -29,6 +38,7 @@ const CounterApp = (props) => {
                     handleIncrement = {modify}
                 />
                 <button onClick={doWhatever}>Do something</button>
+                <h1>count functions : {functions.size}</h1>
             </div>
         </div>
     )
