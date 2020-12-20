@@ -4,7 +4,7 @@ const generateColor = () => {
     return '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);
     // return '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
 }
-const CounterView = (props) => {
+const CounterView = React.memo((props) => {
     const {countValue, handleIncrement} = props;
     useEffect(() => {
         console.log('useEffect called from CounterView');
@@ -16,6 +16,6 @@ const CounterView = (props) => {
             <button onClick={() => handleIncrement(1)}>Modify +1</button>
         </div>
     )
-};
+});
 
 export default CounterView;
