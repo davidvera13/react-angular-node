@@ -4,7 +4,7 @@ import ReactDOM from '../node_modules/react-dom';
 import '../node_modules/bootstrap/dist/js/bootstrap.min.js';
 import './index.scss';
 
-import App from './components/app-component/App'
+import App from './components/App'
 import reportWebVitals from './reportWebVitals';
 
 
