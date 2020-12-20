@@ -4,6 +4,7 @@ import CounterView from "./CounterView";
 
 const CounterApp = (props) => {
     const[count, setCount] = useState(0);
+    const[whatever, setWhatever] = useState(42);
     //const title = props.title;
     const {title} = props;
     // this method will only called when a deps is changed
@@ -14,6 +15,10 @@ const CounterApp = (props) => {
     const modify = (step) => {
         setCount(count + step);
     }
+    const doWhatever = () => setWhatever(whatever + 1)
+
+
+
 
     return (
         <div>
@@ -23,6 +28,7 @@ const CounterApp = (props) => {
                     countValue = {count}
                     handleIncrement = {modify}
                 />
+                <button onClick={doWhatever}>Do something</button>
             </div>
         </div>
     )
