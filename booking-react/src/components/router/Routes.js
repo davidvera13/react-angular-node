@@ -6,7 +6,7 @@ import React from "react";
 
 const Routes = () => {
     return(
-        <div class="container booking-container">
+        <div className="container booking-container">
             <Switch>
                 <Route exact path= '/'>
                     <RentalHome />
