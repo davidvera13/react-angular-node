@@ -4,7 +4,7 @@ import React from 'react';
 const Header = () => {
     return(
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a className="navbar-brand" href="#">Booking</a>
+            <a className="navbar-brand" href="/">Booking</a>
             <button className="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -18,7 +18,7 @@ const Header = () => {
                 </form>
                 <ul className="navbar-nav ml-auto">
                     <li className="nav-item active">
-                        <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+                        <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
                     </li>
                     <li className="nav-item dropdown">
                         <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -33,10 +33,10 @@ const Header = () => {
                         </div>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">Login</a>
+                        <a className="nav-link" href="/login">Login</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">Register</a>
+                        <a className="nav-link" href="/register">Register</a>
                     </li>
 
                 </ul>

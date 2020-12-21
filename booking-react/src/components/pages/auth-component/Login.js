@@ -1,5 +1,4 @@
 import React from 'react';
-import Register from "./Register";
 
 class Login extends React.Component {
     render() {
