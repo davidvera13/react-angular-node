@@ -1,11 +1,13 @@
 @import "./colors";
 @import "./header";
-@import "./rental-home";
+@import "rental-home";
 
 html, body {
   height: 100%;
 }
-
+.booking-container {
+  padding-top: 70px;
+}
 .type- {
   &apartment {
     color: #a72da3 !important;
