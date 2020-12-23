@@ -42,4 +42,9 @@ class RentalHome extends React.Component {
 // context is managed by Connect
 //RentalHome.contextType = StateContext;
 // if we need alert window we can use
-export default connect(RentalHome);
+const mapStateToProps = (state) => {
+    return {
+        rentals: state.rentals
+    }
+}
+export default connect(mapStateToProps)(RentalHome);
