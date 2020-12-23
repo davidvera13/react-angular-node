@@ -12,9 +12,7 @@ class RentalHome extends React.Component {
         debugger;
         //const store = this.context;
         const {rentals} = this.props;
-        this.setState({
-           rentals: rentals()
-        })
+        this.setState({rentals});
     }
 
     renderRentals = (rentals) =>

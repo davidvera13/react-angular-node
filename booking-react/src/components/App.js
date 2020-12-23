@@ -1,20 +1,21 @@
 import React from 'react';
-import Header from "./shared/header-component/Header";
-import { BrowserRouter as Router } from "react-router-dom";
-import Routes from "./router/Routes";
-import {StateContext} from '../state-context'
-import store from "../store";
 
+import { BrowserRouter as Router } from "react-router-dom";
+import { initStore} from "../store";
+import Header from "./shared/header-component/Header";
+import Routes from "./router/Routes";
+import Provider from "../store/Provider";
+
+const store = initStore();
 const App = () => {
+
     return (
-        <div>
-            <StateContext.Provider value={store} >
-                <Router>
-                    <Header />
-                    <Routes />
-                </Router>
-            </StateContext.Provider>
-        </div>
+        <Provider store={store}>
+            <Router>
+                <Header />
+                <Routes />
+            </Router>
+        </Provider>
     )
 }
 

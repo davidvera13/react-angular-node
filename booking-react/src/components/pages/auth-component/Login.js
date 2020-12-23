@@ -9,8 +9,7 @@ class Login extends React.Component {
             <div>
                 <h1>Login page</h1>
                 <hr />
-                <p>{JSON.stringify(data())}</p>
-
+                <p>{JSON.stringify(data)}</p>
             </div>
         )
     }
