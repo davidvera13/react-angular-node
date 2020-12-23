@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt*/
 import React from 'react';
 import RentalCard from "./RentalCard";
-import {StateContext} from "../../../state-context"
+import connect from "../../../store/connect";
 
 class RentalHome extends React.Component {
 
@@ -9,9 +9,11 @@ class RentalHome extends React.Component {
         rentals: []
     }
     componentDidMount() {
-        const store = this.context;
+        debugger;
+        //const store = this.context;
+        const {rentals} = this.props;
         this.setState({
-           rentals: store.rentals()
+           rentals: rentals()
         })
     }
 
@@ -24,6 +26,8 @@ class RentalHome extends React.Component {
 
     render() {
         const { rentals } = this.state;
+        // debugger;
+        // this.props.alert();
 
         return (
             <div className="card-list">
@@ -35,6 +39,7 @@ class RentalHome extends React.Component {
         )
     }
 }
-
-RentalHome.contextType = StateContext;
-export default RentalHome;
+// context is managed by Connect
+//RentalHome.contextType = StateContext;
+// if we need alert window we can use
+export default connect(RentalHome);
