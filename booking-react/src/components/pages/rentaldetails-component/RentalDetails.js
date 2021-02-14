@@ -1,18 +1,28 @@
-import React from 'react'
+import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from "react-redux";
+import { fetchRentalById } from "../../../store/actions";
 
 class RentalDetails extends React.Component {
+    componentDidMount() {
+        // const rentalId = this.props.match.params.id;
+        const { id } = this.props.match.params;
+        this.props.dispatch(fetchRentalById(id))
+    }
+
     render() {
+        debugger;
+        const { rental } = this.props;
         return (
             <section id="rentalDetails">
                 <div className="upper-section">
                     <div className="row">
                         <div className="col-md-6">
-                            {/* <!-- TODO: Display rental image --> */}
-                            <img src="#" alt=""/>
+                            <img src={rental.image} alt={rental.title} />
                         </div>
                         <div className="col-md-6">
-                            {/* <!-- TODO: Display rental image --> */}
-                            <img src="#" alt=""/>
+                            {/* <!-- TODO: Display rental map --> */}
+                            <img src={rental.image} alt={rental.title} />
                         </div>
                     </div>
                 </div>
@@ -21,23 +31,20 @@ class RentalDetails extends React.Component {
                     <div className="row">
                         <div className="col-md-8">
                             <div className="rental">
-                                {/* <!-- TODO: Display shared category --> */}
-                                <h2 className="rental-type">true house</h2>
-                                {/* <!-- TODO: Display title --> */}
-                                <h1 className="rental-title">Some Title</h1>
-                                {/* <!-- TODO: Display city --> */}
-                                <h2 className="rental-city">New York</h2>
+                                <h2 className={`rental-type type-${rental.category}`}>
+                                { rental.shared ? 'Shared': 'Whole'}
+                                    { rental.category }
+                                </h2>
+                                <h1 className="rental-title">{ rental.title }</h1>
+                                <h2 className="rental-city">{ rental.city }</h2>
                                 <div className="rental-room-info">
-                                    {/* <!-- TODO: Display numOfRooms --> */}
-                                    <span><i className="fa fa-building"></i>4 bedrooms</span>
-                                    {/* // <!-- TODO: Display numOfRooms + 4 --> */}
-                                    <span><i className="fa fa-user"></i> 8 guests</span>
-                                    {/* // <!-- TODO: Display numOfRooms + 2 --> */}
-                                    <span><i className="fa fa-bed"></i> 6 beds</span>
+                                    <span><i className="fa fa-building"></i>{ rental.numOfRooms } bedrooms</span>
+                                    <span><i className="fa fa-user"></i>{ rental.numOfRooms + 4 } guests</span>
+
+                                    <span><i className="fa fa-bed"></i>{ rental.numOfRooms + 2 } beds</span>
                                 </div>
-                                {/* <!-- TODO: Display description --> */}
                                 <p className="rental-description">
-                                    Some Description
+                                    { rental.description }
                                 </p>
                                 <hr/>
                                 <div className="rental-assets">
@@ -65,4 +72,7 @@ class RentalDetails extends React.Component {
     }
 }
 
-export default RentalDetails;
+const mapStateToProps = ({rental}) => ({ rental })
+
+const RentalDetailWithRouter = withRouter(RentalDetails);
+export default connect(mapStateToProps)(RentalDetailWithRouter);
