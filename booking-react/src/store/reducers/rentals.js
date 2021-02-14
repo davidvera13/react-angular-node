@@ -18,7 +18,7 @@ const rentals = (state = [], action) => {
     // } else if (action.type === 'CREATE_RENTAL') {
     //     // we create a copy of the state
     //     const rentals = [...state];
-    //     rentals.push(action.rental);
+    //     rentals.push(action.rentaldetails-component);
     //     return [...state, rentals];
     // } else {
     //     return state;

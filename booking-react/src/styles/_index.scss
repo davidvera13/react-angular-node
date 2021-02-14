@@ -1,9 +1,18 @@
 @import "./colors";
 @import "./header";
-@import "rental-home";
+@import "./rental-home";
+@import "./rental-details";
 
 html, body {
   height: 100%;
+}
+.rental-link {
+  color: inherit;
+
+  &:hover {
+    text-decoration: none;
+    color: inherit;
+  }
 }
 .booking-container {
   padding-top: 70px;
