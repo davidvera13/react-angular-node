@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt*/
 import React from 'react';
 import RentalCard from "./RentalCard";
-import connect from "../../../store/connect";
+import { connect } from "react-redux";
 import { fetchRentals, createRental} from "../../../store/actions";
 
 class RentalHome extends React.Component {

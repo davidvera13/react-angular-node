@@ -8,6 +8,8 @@ export function initStore() {
         rentals: rentals
     });
 
-    const store = createStore(reducers);
+    const reduxExtension = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    const store = createStore(reducers, reduxExtension);
     return store
 }
+
