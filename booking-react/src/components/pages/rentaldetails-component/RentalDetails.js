@@ -2,8 +2,8 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { withRouter } from 'react-router-dom';
 import { connect } from "react-redux";
-import { fetchRentalById } from "../../../store/actions";
-import { capitalize } from "../../../helpers/functions";
+import { fetchRentalById } from "store/actions";
+import { capitalize } from "helpers/functions";
 
 class RentalDetails extends React.Component {
     componentDidMount() {
