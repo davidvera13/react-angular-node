@@ -1,4 +1,6 @@
+<app-header></app-header>
 <div class="container">
-  <app-header></app-header>
-  <h1>{{test}}</h1>
+  <button (click)="onIncrement($event)">Increment</button>&nbsp;<button (click)="onUpdate(1)">+</button>
+  <h1>{{counter}}</h1>
+  <button (click)="onDecrement($event)">Decrement</button>&nbsp;<button (click)="onUpdate(-1)">-</button>
 </div>

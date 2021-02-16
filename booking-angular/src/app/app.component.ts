@@ -6,7 +6,24 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'booking-angular';
-  test = 'We are just testing';
+  counter = 0;
+
+  onIncrement($event: MouseEvent): void {
+    console.log('# onIncrement method called');
+    console.log($event);
+    this.counter++;
+  }
+
+  onDecrement($event: MouseEvent): void {
+    console.log('# onIncrement method called');
+    console.log($event);
+    this.counter--;
+  }
+
+  onUpdate(value: number): void {
+    console.log('# onUpdate method called');
+    this.counter += value;
+  }
+
 
 }
