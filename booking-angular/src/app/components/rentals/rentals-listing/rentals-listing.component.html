@@ -6,7 +6,13 @@
       <div
         *ngFor="let rental of rentals"
         class="col-md-3 col-xs-12">
-        <app-rental-cards [rental] ="rental"></app-rental-cards>
+        parent : {{ parentData }}
+        <app-rental-cards
+          [rental] ="rental"
+          [childData]="parentData"
+          (updatedChildData)="onChangeParentData($event)"
+        >
+        </app-rental-cards>
       </div>
     </div>
   </div>

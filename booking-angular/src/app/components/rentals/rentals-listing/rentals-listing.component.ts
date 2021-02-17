@@ -18,6 +18,9 @@ export class RentalsListingComponent implements OnInit, IRental {
   someData = 'someData';
   isLoaded = true;
 
+  // output()
+  parentData = 10;
+
   ngOnInit(): void {
     const appStorage = new AppStorage<number>();
     appStorage.addItem(42);
@@ -39,4 +42,7 @@ export class RentalsListingComponent implements OnInit, IRental {
     return '';
   }
 
+  onChangeParentData($event: number): void {
+    this.parentData = $event;
+  }
 }

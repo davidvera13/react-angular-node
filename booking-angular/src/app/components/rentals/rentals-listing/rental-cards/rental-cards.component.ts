@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, EventEmitter, Output} from '@angular/core';
 import {RentalModel} from '../../../../shared/rental.model';
 
 @Component({
@@ -6,12 +6,15 @@ import {RentalModel} from '../../../../shared/rental.model';
   templateUrl: './rental-cards.component.html',
   styleUrls: ['./rental-cards.component.scss']
 })
-export class RentalCardsComponent implements OnInit {
+export class RentalCardsComponent {
   @Input('rental') rental: RentalModel = {} as RentalModel;
-
+  @Input('childData') childData: number = 0 as number;
+  @Output() updatedChildData = new EventEmitter<number>();
   constructor() { }
 
-  ngOnInit(): void {
+  onChangeData($event: { preventDefault: () => void; }): void {
+    this.childData = 42;
+    $event.preventDefault();
+    this.updatedChildData.emit(this.childData);
   }
-
 }
