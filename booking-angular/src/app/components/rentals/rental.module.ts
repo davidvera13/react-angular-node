@@ -4,6 +4,7 @@ import {RentalsListingComponent} from './rentals-listing/rentals-listing.compone
 import {RentalDetailsComponent} from './rental-details/rental-details.component';
 import { RentalsComponent } from './rentals.component';
 import {CommonModule} from '@angular/common';
+import { RentalCardsComponent } from './rentals-listing/rental-cards/rental-cards.component';
 
 const routes: Routes = [
   {
@@ -19,7 +20,8 @@ const routes: Routes = [
   declarations: [
     RentalDetailsComponent,
     RentalsListingComponent,
-    RentalsComponent
+    RentalsComponent,
+    RentalCardsComponent
   ],
   imports: [RouterModule.forChild(routes), CommonModule]
 })
