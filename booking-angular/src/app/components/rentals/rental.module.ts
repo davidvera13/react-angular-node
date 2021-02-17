@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {RentalsListingComponent} from './rentals-listing/rentals-listing.component';
 import {RentalDetailsComponent} from './rental-details/rental-details.component';
 import { RentalsComponent } from './rentals.component';
+import {CommonModule} from '@angular/common';
 
 const routes: Routes = [
   {
@@ -20,6 +21,6 @@ const routes: Routes = [
     RentalsListingComponent,
     RentalsComponent
   ],
-  imports: [RouterModule.forChild(routes)]
+  imports: [RouterModule.forChild(routes), CommonModule]
 })
 export class RentalModule { }
