@@ -9,12 +9,12 @@ import {RentalModel} from '../../../../shared/rental.model';
 export class RentalCardsComponent {
   @Input('rental') rental: RentalModel = {} as RentalModel;
   @Input('childData') childData: number = 0 as number;
-  @Output() updatedChildData = new EventEmitter<number>();
+  @Output() childDataChange = new EventEmitter<number>();
   constructor() { }
 
   onChangeData($event: { preventDefault: () => void; }): void {
     this.childData = 42;
     $event.preventDefault();
-    this.updatedChildData.emit(this.childData);
+    this.childDataChange.emit(this.childData);
   }
 }

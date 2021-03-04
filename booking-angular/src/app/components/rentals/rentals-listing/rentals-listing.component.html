@@ -7,12 +7,28 @@
         *ngFor="let rental of rentals"
         class="col-md-3 col-xs-12">
         parent : {{ parentData }}
+<!--        <app-rental-cards-->
+<!--          [rental] ="rental"-->
+<!--          [childData]="parentData"-->
+<!--          (childDataChange)= "onChangeParentData($event)"-->
+<!--        >-->
+<!--        </app-rental-cards>-->
+
+        <!-- 2 way data binding is similar to this code      -->
         <app-rental-cards
           [rental] ="rental"
           [childData]="parentData"
-          (updatedChildData)="onChangeParentData($event)"
+          (childDataChange)="parentData = $event"
         >
         </app-rental-cards>
+
+
+        <app-rental-cards
+          [rental] ="rental"
+          [(childData)]="parentData"
+        >
+        </app-rental-cards>
+
       </div>
     </div>
   </div>
