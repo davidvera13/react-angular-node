@@ -7,6 +7,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { RentalModule } from './components/rentals/rental.module';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
