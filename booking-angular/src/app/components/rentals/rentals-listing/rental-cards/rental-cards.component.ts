@@ -1,4 +1,4 @@
-import {Component, Input, EventEmitter, Output} from '@angular/core';
+import {Component, Input } from '@angular/core';
 import {RentalModel} from '../../../../shared/rental.model';
 
 @Component({
@@ -8,13 +8,8 @@ import {RentalModel} from '../../../../shared/rental.model';
 })
 export class RentalCardsComponent {
   @Input('rental') rental: RentalModel = {} as RentalModel;
-  @Input('childData') childData: number = 0 as number;
-  @Output() childDataChange = new EventEmitter<number>();
+
   constructor() { }
 
-  onChangeData($event: { preventDefault: () => void; }): void {
-    this.childData = 42;
-    $event.preventDefault();
-    this.childDataChange.emit(this.childData);
-  }
+
 }

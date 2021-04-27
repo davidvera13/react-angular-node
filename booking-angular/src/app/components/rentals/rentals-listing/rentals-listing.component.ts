@@ -8,41 +8,17 @@ import {AppStorage, IRental} from '../../../shared/rental.interface';
   templateUrl: './rentals-listing.component.html',
   styleUrls: ['./rentals-listing.component.scss']
 })
-export class RentalsListingComponent implements OnInit, IRental {
+export class RentalsListingComponent implements OnInit {
   public rentals: RentalModel[] = [];
-
+  // implementing members of the interface
+  isLoaded = true;
 
   constructor(private rentalService: RentalService) { }
 
-  // implementing members of the interface
-  someData = 'someData';
-  isLoaded = true;
-
-  // output()
-  parentData = 10;
-
   ngOnInit(): void {
-    const appStorage = new AppStorage<number>();
-    appStorage.addItem(42);
-    appStorage.addItem(44);
-    appStorage.addItem(13);
-
-    const item = appStorage.getItem(0);
-    const items = appStorage.getItems();
-    console.log('single item: ', item);
-    console.log('all items: ', items);
     this.rentalService.getRentals()
       .subscribe((rentals: RentalModel[]) => {
         this.rentals = rentals;
       });
-  }
-
-  // implemented method from interface
-  implementMe(): string {
-    return '';
-  }
-
-  onChangeParentData($event: number): void {
-    this.parentData = $event;
   }
 }
