@@ -7,6 +7,7 @@ import {CommonModule} from '@angular/common';
 import { RentalCardsComponent } from './rentals-listing/rental-cards/rental-cards.component';
 import {UppercasePipe} from '../../pipes/uppercase.pipe';
 import {FirstUpperLetterPipe} from '../../pipes/firstUpperLetter.pipe';
+import {HighlightDirective} from '../../directives/custom.directive';
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
     RentalsComponent,
     RentalCardsComponent,
     UppercasePipe,
-    FirstUpperLetterPipe
+    FirstUpperLetterPipe,
+    HighlightDirective
   ],
   imports: [RouterModule.forChild(routes), CommonModule]
 })

@@ -24,7 +24,7 @@
             {{ (rental.shared ? "Shared" : "Whole")  | upper}}
             {{ rental.category | upper }}
           </h2>
-          <h1 class="rental-title">
+          <h1 [appHighlight]="'ivory'" class="rental-title">
             {{ rental.title }}
           </h1>
           <h2 class="rental-city">
@@ -49,7 +49,7 @@
             {{rental.description}}
           </p>
           <hr>
-          <div class="rental-assets">
+          <div class="rental-assets" [appHighlight]="'lightyellow'">
             <h3 class="title">Assets</h3>
             <div class="row">
               <div class="col-md-6">
