@@ -9,7 +9,7 @@ import {
   // tslint:disable-next-line:directive-selector
   selector: '[ngCustomIf]'
 })
-export class StructuralDirective implements OnInit {
+export class NgCustomIfDirective implements OnInit {
   // @Input('ngCustomIf') ngCustomIf;
   hasView = false;
   @Input('ngCustomIf') set ngCustomIf(condition: boolean) {

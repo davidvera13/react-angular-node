@@ -8,6 +8,8 @@ import { RentalCardsComponent } from './rentals-listing/rental-cards/rental-card
 import {UppercasePipe} from '../../pipes/uppercase.pipe';
 import {FirstUpperLetterPipe} from '../../pipes/firstUpperLetter.pipe';
 import {HighlightDirective} from '../../directives/custom.directive';
+import {NgCustomIfDirective} from '../../directives/ng-custom-if.directive';
+import {NgCustomForDirective} from '../../directives/ng-custom-for.directive';
 
 const routes: Routes = [
   {
@@ -27,7 +29,9 @@ const routes: Routes = [
     RentalCardsComponent,
     UppercasePipe,
     FirstUpperLetterPipe,
-    HighlightDirective
+    HighlightDirective,
+    NgCustomIfDirective,
+    NgCustomForDirective
   ],
   imports: [RouterModule.forChild(routes), CommonModule]
 })

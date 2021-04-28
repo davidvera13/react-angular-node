@@ -1,7 +1,6 @@
 <div class="row">
   <div class="booking-list-page">
     <h1 class="title">Your home all around the World</h1>
-    <!-- TODO: Create custom directive in end of this section -->
     <div class="row">
       <div
         *ngFor="let rental of rentals"
@@ -10,8 +9,34 @@
           [rental] ="rental"
         >
         </app-rental-cards>
-
+<!--        <div *ngCustomIf="rental.category === 'house' ">-->
+<!--          This is a house-->
+<!--        </div>-->
+<!--        <ng-template [ngCustomIf]="rental.category === 'house' ">-->
+<!--          This is a house-->
+<!--        </ng-template>-->
       </div>
+
+
+<!--      <div-->
+<!--        *ngCustomFor="let rental of rentals"-->
+<!--        class="col-md-3 col-xs-12">-->
+<!--        <app-rental-cards-->
+<!--          [rental] ="rental"-->
+<!--        >-->
+<!--        </app-rental-cards>-->
+<!--      </div>-->
+<!--      <div-->
+<!--        *ngCustomFor="let num of [1,2,3]"-->
+<!--        class="col-md-3 col-xs-12">-->
+<!--        test {{ num }}-->
+<!--      </div>-->
+<!--      <ng-template ngCustomFor let-num [ngCustomForOf]="[1,2,3]">-->
+<!--        <div-->
+<!--          class="col-md-3 col-xs-12">-->
+<!--          test {{ num }}-->
+<!--        </div>-->
+<!--      </ng-template>-->
     </div>
   </div>
 </div>

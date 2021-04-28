@@ -1,30 +1,29 @@
 import {
   Directive,
   ElementRef,
-  Input,
-  OnInit, TemplateRef, ViewContainerRef
+  Input, OnChanges,
+  OnInit, SimpleChanges, TemplateRef, ViewContainerRef
 } from '@angular/core';
 
 @Directive({
   // tslint:disable-next-line:directive-selector
-  selector: '[ngCustomIf]'
+  selector: '[ngCustomFor]'
 })
-export class NgCustomIfDirective implements OnInit {
-  // @Input('ngCustomIf') ngCustomIf;
-  hasView = false;
-  @Input('ngCustomIf') set ngCustomIf(condition: boolean) {
-    if (condition && !this.hasView) {
-      this.container.createEmbeddedView(this.template);
-      this.hasView = true;
-    } else if (!condition && this.hasView) {
-      this.container.clear();
-      this.hasView = false;
-    }
-  }
+export class NgCustomForDirective implements OnInit, OnChanges {
+
+  @Input('ngCustomForOf') ngCustomForOf: Array<any>;
+
   constructor(private container: ViewContainerRef,
               private template: TemplateRef<any>) {
   }
 
   ngOnInit(): void {
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.ngCustomForOf.forEach(itemValue => {
+      this.container.createEmbeddedView(this.template, { $implicit: itemValue });
+    });
+  }
+
 }
