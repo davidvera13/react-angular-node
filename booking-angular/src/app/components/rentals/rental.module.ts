@@ -6,6 +6,7 @@ import { RentalsComponent } from './rentals.component';
 import {CommonModule} from '@angular/common';
 import { RentalCardsComponent } from './rentals-listing/rental-cards/rental-cards.component';
 import {UppercasePipe} from '../../pipes/uppercase.pipe';
+import {FirstUpperLetterPipe} from '../../pipes/firstUpperLetter.pipe';
 
 const routes: Routes = [
   {
@@ -23,7 +24,8 @@ const routes: Routes = [
     RentalsListingComponent,
     RentalsComponent,
     RentalCardsComponent,
-    UppercasePipe
+    UppercasePipe,
+    FirstUpperLetterPipe
   ],
   imports: [RouterModule.forChild(routes), CommonModule]
 })
