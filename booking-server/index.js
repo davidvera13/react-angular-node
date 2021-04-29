@@ -52,3 +52,24 @@ app.post('/api/v1/rentals', (req, res) => {
     rentals.push(payload);
     return res.json({ message: `rental with id ${payload._id} was added`});
 });
+
+app.delete('/api/v1/rentals/:rentalId', (req, res) => {
+    const {rentalId} = req.params;
+    const rentalIndex = rentals.findIndex(rental => rental._id === rentalId );
+    // remove one element of the array based on index position
+    rentals.splice(rentalIndex, 1);
+    return res.json({ message: `rental with id ${rentalId} was removed`});
+
+});
+
+app.patch('/api/v1/rentals/:rentalId', (req, res) => {
+    const {rentalId} = req.params;
+    const payload = req.body;
+    const rentalIndex = rentals.findIndex(rental => rental._id === rentalId );
+
+    // let's consider we just update city and title
+    rentals[rentalIndex].city = payload.city;
+    rentals[rentalIndex].title = payload.title;
+
+    return res.json({ message: `rental with id ${rentalId} was updated`});
+})
