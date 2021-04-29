@@ -7,8 +7,12 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
 require('dotenv').config()
 
-
+// routes
 const rentalRoutes = require('./routes/rentals.routes');
+
+// models
+const Rental = require('./models/rental.model');
+
 const app  = express();
 const PORT = process.env.PORT || 3001;
 

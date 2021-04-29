@@ -1,2 +1,3 @@
 ﻿.idea
 booking-server/node_modules
+booking-server/.env
