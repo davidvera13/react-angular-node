@@ -5,8 +5,8 @@ const {
     getRentals,
     getRental,
     createRental,
-    updateRental,
-    deleteRental
+    // updateRental,
+    // deleteRental
 } = require('../controllers/rentals.controller');
 
 
@@ -17,9 +17,9 @@ router.get('/:rentalId',getRental);
 
 router.post('/', createRental);
 
-router.delete('/:rentalId', deleteRental);
-
-router.patch('/:rentalId', updateRental);
+// router.delete('/:rentalId', deleteRental);
+//
+// router.patch('/:rentalId', updateRental);
 
 // export the router and make it available to index.js
 module.exports = router;
