@@ -45,5 +45,23 @@ const rentalSchema = new Schema({
     },
 })
 
+// handling exceptions
+// available on instance: in controller :
+// return new Rental().sendError(....)
+// rentalSchema.methods.sendError = function(res, config) {
+//   const { status, detail } = config;
+//   return res
+//     .status(status)
+//     .send({errors: [{title: 'Rental Error!', detail}]})
+// }
+
+
+// using static call 
+rentalSchema.statics.sendError = function(res, config) {
+    const { status, detail } = config;
+    return res
+        .status(status)
+        .send({errors: [{title: 'Rental Error!', detail}]})
+}
 
 module.exports = mongoose.model('Rental', rentalSchema)

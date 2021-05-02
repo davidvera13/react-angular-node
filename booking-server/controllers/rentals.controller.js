@@ -4,13 +4,14 @@ const Rental = require('../models/rental.model')
 exports.getRentals = (req, res) => {
     Rental.find({}, (error, rentals) => {
         if (error) {
-            return res.status(422).send(
-                { errors: [
-                    {
-                        title: 'Rental Error',
-                        message: 'Cannot retrieve rental data'
-                    }]
-                });
+            return Rental.sendError(res, { status: 422, detail: 'Cannot retrieve rental data' });
+            // return res.status(422).send(
+            //     { errors: [
+            //         {
+            //             title: 'Rental Error',
+            //             message: 'Cannot retrieve rental data'
+            //         }]
+            //     });
         } else {
             // return results
             return res.json(rentals)
@@ -23,13 +24,7 @@ exports.getRental = (req, res) => {
     const {rentalId} = req.params;
     Rental.findById(rentalId, (error, rental) => {
         if (error) {
-            return res.status(422).send(
-                { errors: [
-                    {
-                        title: 'Rental Error',
-                        message: 'Cannot retrieve rental data'
-                    }]
-                });
+            return Rental.sendError(res, { status: 422, detail: 'Cannot retrieve rental data' })
         } else {
             return res.json(rental)
         }
@@ -63,18 +58,11 @@ exports.createRental = (req, res) => {
     // using model
     Rental.create(payload, (error, storedRental) => {
         if (error) {
-            return res.status(422).send(
-                { errors: [
-                    {
-                        title: 'Rental Error',
-                        message: 'Cannot post rental data'
-                    }]
-                });
-            } else {
-                return res.json({ message: `rental with id ${storedRental._id} was added`});
-            }
+            return Rental.sendError(res, { status: 422, detail: 'Cannot retrieve rental data' });
+        } else {
+            return res.json({ message: `rental with id ${storedRental._id} was added`});
+        }
     });
-
 }
 
 // exports.updateRental = (req, res) => {
