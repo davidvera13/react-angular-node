@@ -5,13 +5,11 @@ exports.getRentals = (req, res) => {
     Rental.find({}, (error, rentals) => {
         if (error) {
             return res.status(422).send(
-                { errors:
-                    [
-                        {
-                            title: 'Rental Error',
-                            message: 'Cannot retrieve rental data'
-                        }
-                    ]
+                { errors: [
+                    {
+                        title: 'Rental Error',
+                        message: 'Cannot retrieve rental data'
+                    }]
                 });
         } else {
             // return results
@@ -26,13 +24,11 @@ exports.getRental = (req, res) => {
     Rental.findById(rentalId, (error, rental) => {
         if (error) {
             return res.status(422).send(
-                { errors:
-                        [
-                            {
-                                title: 'Rental Error',
-                                message: 'Cannot retrieve rental data'
-                            }
-                        ]
+                { errors: [
+                    {
+                        title: 'Rental Error',
+                        message: 'Cannot retrieve rental data'
+                    }]
                 });
         } else {
             return res.json(rental)
@@ -44,8 +40,41 @@ exports.getRental = (req, res) => {
 exports.createRental = (req, res) => {
     // we expect a payload
     const payload = req.body;
-    rentals.push(payload);
-    return res.json({ message: `rental with id ${payload._id} was added`});
+    // create an instance based on the model or use a create function
+
+    // first creation method
+    // const rental = new Rental(payload);
+    // rental.save((error, storedRental) => {
+    //     if (error) {
+    //         return res.status(422).send(
+    //             { errors:
+    //                 [
+    //                     {
+    //                         title: 'Rental Error',
+    //                         message: 'Cannot post rental data'
+    //                     }
+    //                 ]
+    //             });
+    //     } else {
+    //         return res.json({ message: `rental with id ${storedRental._id} was added`});
+    //     }
+    // });
+
+    // using model
+    Rental.create(payload, (error, storedRental) => {
+        if (error) {
+            return res.status(422).send(
+                { errors: [
+                    {
+                        title: 'Rental Error',
+                        message: 'Cannot post rental data'
+                    }]
+                });
+            } else {
+                return res.json({ message: `rental with id ${storedRental._id} was added`});
+            }
+    });
+
 }
 
 // exports.updateRental = (req, res) => {
