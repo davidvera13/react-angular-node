@@ -3,32 +3,29 @@ import axios from 'axios';
 
 
 // we define the type and associate payload
-export const fetchRentals = (rentals) => {
-    return axios.get('http://localhost:3000/api/v1/rentals')
-        .then(res => {
-            const rentals = res.data;
-            return {
-                type: 'FETCH_RENTALS',
-                rentals
-            }
-        })
+export const fetchRentals = () => async dispatch  => {
+    const res = await axios.get('/api/v1/rentals')
+    dispatch({
+        type: 'FETCH_RENTALS',
+        rentals: res.data
+    })
+
+    // await axios.get('/api/v1/rentals')
+    //     .then(res => {
+    //         const rentals = res.data;
+    //         dispatch({
+    //             type: 'FETCH_RENTALS',
+    //             rentals
+    //         })
+    //     })
 }
 
-export const fetchRentalById = (rentalId) => {
-    // find method iterate through array of object we return the object which responds to the test
-    // const rental = rentalsData.find((rental) => {
-    //     if (rental._id === parseInt(rentalId)) {
-    //         return rental;
-    //     }
-    // });
-
-    //
-    // const rental = rentalsData.find((rental) => (rental._id === parseInt(rentalId)));
-    //
-    // return {
-    //     type: 'FETCH_RENTAL_BY_ID',
-    //     rental
-    // }
+export const fetchRentalById = (rentalId) => async dispatch => {
+    const res = await axios.get(`/api/v1/rentals/${rentalId}`)
+     dispatch({
+         type: 'FETCH_RENTAL_BY_ID',
+         rental: res.data
+     });
 }
 
 export const createRental = rental => {
