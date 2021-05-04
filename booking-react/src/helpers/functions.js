@@ -1,4 +1,5 @@
 export const capitalize = (value) => {
+    // eslint-disable-next-line
     if(!value || typeof value !== 'string ') {
         return '';
     }

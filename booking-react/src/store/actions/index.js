@@ -1,12 +1,18 @@
-import { rentalsData } from '../data'
+// import { rentalsData } from '../data'
+// import axios from 'axios';
 
-debugger;
 
 // we define the type and associate payload
-export const fetchRentals = () => {
+export const fetchRentals = (rentals) => {
+     // axios.get('http://localhost:3001/api/v1/rentals')
+     //    .then(res => {
+     //        const rentals = res.data;
+     //        // console.log(rentals);
+     //        return rentals;
+     //    });
     return {
         type: 'FETCH_RENTALS',
-        rentals: rentalsData
+        rentals: rentals
     }
 }
 
@@ -18,12 +24,13 @@ export const fetchRentalById = (rentalId) => {
     //     }
     // });
 
-    const rental = rentalsData.find((rental) => (rental._id === parseInt(rentalId)));
-
-    return {
-        type: 'FETCH_RENTAL_BY_ID',
-        rental
-    }
+    //
+    // const rental = rentalsData.find((rental) => (rental._id === parseInt(rentalId)));
+    //
+    // return {
+    //     type: 'FETCH_RENTAL_BY_ID',
+    //     rental
+    // }
 }
 
 export const createRental = rental => {
