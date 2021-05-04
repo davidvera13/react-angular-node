@@ -1,19 +1,17 @@
 // import { rentalsData } from '../data'
-// import axios from 'axios';
+import axios from 'axios';
 
 
 // we define the type and associate payload
 export const fetchRentals = (rentals) => {
-     // axios.get('http://localhost:3001/api/v1/rentals')
-     //    .then(res => {
-     //        const rentals = res.data;
-     //        // console.log(rentals);
-     //        return rentals;
-     //    });
-    return {
-        type: 'FETCH_RENTALS',
-        rentals: rentals
-    }
+    return axios.get('http://localhost:3000/api/v1/rentals')
+        .then(res => {
+            const rentals = res.data;
+            return {
+                type: 'FETCH_RENTALS',
+                rentals
+            }
+        })
 }
 
 export const fetchRentalById = (rentalId) => {
