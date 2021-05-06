@@ -5,7 +5,7 @@ import rental from './reducers/rental';
 import thunk from "redux-thunk";
 
 
-
+// eslint-disable-next-line
 const addPromiseToDispatch = (store) => {
     const { dispatch } = store;
 

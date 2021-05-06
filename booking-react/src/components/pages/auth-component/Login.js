@@ -1,32 +1,15 @@
 import React from 'react';
+import LoginForm from "./forms/LoginForm";
 
 class Login extends React.Component {
-    state = {
-        email: 'test@test.com',
-        password: 'password'
-    }
 
-    handleInputChange = (event) => {
-        // console.log(event);
-        const {value} = event.target;
-        const {name} = event.target;
-        this.setState({ [name]: value})
-    }
-    // handleEmailChange = (event) => {
-    //     // console.log(event);
-    //     const email = event.target.value;
-    //     this.setState({ email: email})
-    // }
-    // handlePasswordChange = (event) => {
-    //     // console.log(event);
-    //     const password = event.target.value;
-    //     this.setState({ password })
-    // }
-    handleSubmit = (event) => {
-        // console.log(event);
-        alert(JSON.stringify(this.state));
-        event.preventDefault();
-    }
+    debugger;
+    // eslint-disable-next-line
+     loginUser = (loginData) => {
+        console.log(loginData)
+        alert(JSON.stringify(loginData));
+    };
+
 
     render() {
         return(
@@ -37,40 +20,7 @@ class Login extends React.Component {
                         {/* <!-- <div className="alert alert-success">
         Some message
       </div> --> */}
-                        <form>
-                            <div className="form-group">
-                                <label htmlFor="email">Email</label>
-                                <input
-                                    onChange= {this.handleInputChange}
-                                    placeholder={ this.state.email}
-                                    name="email"
-                                    type="email"
-                                    className="form-control"
-                                    id="email" />
-                                {/* <div className="alert alert-danger">
-            <div>
-              Email is required.
-            </div>
-            <div>
-              Must be valid email format!
-            </div>
-          </div> */}
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="password">Password</label>
-                                <input
-                                    onChange = {this.handleInputChange}
-                                    placeholder = {this.state.password}
-                                    name="password"
-                                    type="password"
-                                    className="form-control"
-                                    id="password" />
-                            </div>
-                            <button
-                                onClick={this.handleSubmit}
-                                type="button"
-                                className="btn btn-booking-main">Submit</button>
-                        </form>
+                        <LoginForm onSubmit={this.loginUser} />
                         {/* <div className="alert alert-danger">
         <p>
           Some Error

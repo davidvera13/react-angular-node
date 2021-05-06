@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { fetchRentalById } from "store/actions";
 import RentalInfo from "./RentalInfo";
 
+// eslint-disable-next-line
 function RentalDetailInfo() {
     return null;
 }

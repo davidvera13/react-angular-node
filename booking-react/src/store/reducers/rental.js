@@ -19,9 +19,10 @@ const initRentalReducer = () => {
             case 'FETCH_RENTAL_BY_ID':
                 return false;
             default:
+                // eslint-disable-next-line
                 return state;
         }
-    }
+    };
 
     return combineReducers({item, isFetching})
 }
