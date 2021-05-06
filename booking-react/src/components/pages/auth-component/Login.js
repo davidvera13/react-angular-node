@@ -1,6 +1,33 @@
 import React from 'react';
 
 class Login extends React.Component {
+    state = {
+        email: 'test@test.com',
+        password: 'password'
+    }
+
+    handleInputChange = (event) => {
+        // console.log(event);
+        const {value} = event.target;
+        const {name} = event.target;
+        this.setState({ [name]: value})
+    }
+    // handleEmailChange = (event) => {
+    //     // console.log(event);
+    //     const email = event.target.value;
+    //     this.setState({ email: email})
+    // }
+    // handlePasswordChange = (event) => {
+    //     // console.log(event);
+    //     const password = event.target.value;
+    //     this.setState({ password })
+    // }
+    handleSubmit = (event) => {
+        // console.log(event);
+        alert(JSON.stringify(this.state));
+        event.preventDefault();
+    }
+
     render() {
         return(
             <div className="booking-form">
@@ -14,6 +41,9 @@ class Login extends React.Component {
                             <div className="form-group">
                                 <label htmlFor="email">Email</label>
                                 <input
+                                    onChange= {this.handleInputChange}
+                                    placeholder={ this.state.email}
+                                    name="email"
                                     type="email"
                                     className="form-control"
                                     id="email" />
@@ -29,13 +59,17 @@ class Login extends React.Component {
                             <div className="form-group">
                                 <label htmlFor="password">Password</label>
                                 <input
+                                    onChange = {this.handleInputChange}
+                                    placeholder = {this.state.password}
+                                    name="password"
                                     type="password"
                                     className="form-control"
                                     id="password" />
                             </div>
                             <button
-                                type="submit"
-                                className="btn btn-bwm-main">Submit</button>
+                                onClick={this.handleSubmit}
+                                type="button"
+                                className="btn btn-booking-main">Submit</button>
                         </form>
                         {/* <div className="alert alert-danger">
         <p>

@@ -21,7 +21,6 @@ const initRentalReducer = () => {
             default:
                 return state;
         }
-        return state
     }
 
     return combineReducers({item, isFetching})

@@ -3,7 +3,7 @@ import React from 'react';
 import RentalCard from "./RentalCard";
 import { connect } from "react-redux";
 import {fetchRentals} from "store/actions";
-import axios from "axios";
+
 
 class RentalHome extends React.Component {
 
