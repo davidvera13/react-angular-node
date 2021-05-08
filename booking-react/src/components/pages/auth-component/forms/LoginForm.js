@@ -1,14 +1,24 @@
 import React from 'react';
 import {useForm} from "react-hook-form";
+import { ErrorMessage } from '@hookform/error-message';
 
 
 const LoginForm = ({onSubmit}) => {
+    debugger;
     // eslint-disable-next-line
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        criteriaMode: "all"
+    });
+
+    const Error = ({ children }) =>
+        <div className='alert alert-danger'>
+            { children }
+        </div>
+
 
     // eslint-disable-next-line
     const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
+    debugger;
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
@@ -18,8 +28,11 @@ const LoginForm = ({onSubmit}) => {
                         ...register(
                             "email",
                             {
-                                required: true,
-                                pattern: EMAIL_PATTERN
+                                required: "Email is required",
+                                pattern: {
+                                    value: EMAIL_PATTERN,
+                                    message: "Must be valid email format!"
+                                }
                             }
                         )
                     }
@@ -29,20 +42,14 @@ const LoginForm = ({onSubmit}) => {
                     id="email" />
             </div>
             <div>
-                {
-                    errors.email &&
-                    <div className='alert alert-danger'>
-                        {
-                            errors.email.type === 'required' &&
-                            <span>Email is required</span>
-                        }
-                        {
-                            errors.email.type === 'pattern' &&
-                            <span>Must be valid email format!</span>
-                        }
-
-                    </div>
-                }
+                <ErrorMessage as={<Error />} errors={errors} name="email">
+                    {({ messages }) =>
+                        messages &&
+                        Object.entries(messages).map(([type, message]) => (
+                            <p key={type}>HELLO<div className='alert alert-danger'>{message}</div></p>
+                        ))
+                    }
+                </ErrorMessage>
             </div>
 
             <div className="form-group">
@@ -52,9 +59,15 @@ const LoginForm = ({onSubmit}) => {
                         ...register(
                             "password",
                             {
-                                required: true,
-                                minLength: 5,
-                                maxLength: 20
+                                required: "Password is required",
+                                minLength: {
+                                    value: 5,
+                                    message: "Password is too short"
+                                },
+                                maxLength: {
+                                    value: 20,
+                                    message: "Password is too long"
+                                }
                             }
                         )
                     }
@@ -64,23 +77,14 @@ const LoginForm = ({onSubmit}) => {
                     id="password" />
             </div>
             <div>
-                {
-                    errors.password &&
-                    <div className='alert alert-danger'>
-                        {
-                            errors.password.type === 'required' &&
-                                <span>Password is required</span>
-                        }
-                        {
-                            errors.password.type === 'minLength' &&
-                            <span>Password is too short</span>
-                        }
-                        {
-                            errors.password.type === 'maxLength' &&
-                            <span>Password is too long</span>
-                        }
-                    </div>
-                }
+                <ErrorMessage as={<Error />} errors={errors} name="password">
+                    {({ messages }) =>
+                        messages &&
+                        Object.entries(messages).map(([type, message]) => (
+                            <p key={type}>{message}</p>
+                        ))
+                    }
+                </ErrorMessage>
             </div>
 
             <button
