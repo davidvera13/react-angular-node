@@ -3,45 +3,109 @@
     <div class="row">
       <div class="col-md-5">
         <h1 class="page-title">Register</h1>
-        <form>
+        <!-- template driven form -->
+        <form #registrationForm = "ngForm">
           <div class="form-group">
             <label for="username">Username</label>
-            <input type="text"
-                   class="form-control"
-                   id="username">
-            <!-- <div class="alert alert-danger">
-             <div *ngIf="username.errors.required">
-               Username is required.
-             </div>
-           </div> -->
+            <input
+              [(ngModel)]="registerFormData.username"
+              name="username"
+              required
+              #username = "ngModel"
+              minlength="4"
+              type="text"
+              class="form-control"
+              id="username"
+            >
           </div>
+          <div *ngIf="username.invalid && username.pristine === false" class="alert alert-danger">
+            <div *ngIf="username.errors.required">
+              Username is required.
+            </div>
+            <div *ngIf="username.errors.minlength">
+              Username must be at least 4 characters long!
+            </div>
+          </div>
+
 
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email"
-                   class="form-control"
-                   id="email">
+            <input
+              [(ngModel)]="registerFormData.email"
+              name="email"
+              required
+              #email = "ngModel"
+              [pattern]="emailPattern"
+              type="email"
+              class="form-control"
+              id="email">
           </div>
+          <div *ngIf="email.invalid && email.pristine === false" class="alert alert-danger">
+            <div *ngIf="email.errors.required">
+              Email is required!
+            </div>
+            <div *ngIf="email.errors.pattern">
+              Email format is not valid!
+            </div>
+          </div>
+
 
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password"
-                   class="form-control"
-                   id="password">
+            <input
+              [(ngModel)]="registerFormData.password"
+              name="password"
+              required
+              #password = "ngModel"
+              minlength="6"
+              type="password"
+              class="form-control"
+              id="password">
+          </div>
+          <div *ngIf="password.invalid && password.pristine === false" class="alert alert-danger">
+            <div *ngIf="password.errors.required">
+              Password is required!
+            </div>
+            <div *ngIf="password.errors.minlength">
+              Password must be at least 6 characters long!
+            </div>
           </div>
 
           <div class="form-group">
             <label for="passwordConfirmation">Confirm Password</label>
-            <input type="password"
-                   class="form-control"
-                   id="passwordConfirmation">
+            <input
+              [(ngModel)]="registerFormData.passwordConfirmation"
+              name="passwordConfirmation"
+              type="password"
+              required
+              #passwordConfirmation = "ngModel"
+              minlength="6"
+              class="form-control"
+              id="passwordConfirmation">
           </div>
+          <div
+            *ngIf="passwordConfirmation.invalid && passwordConfirmation.pristine === false"
+            class="alert alert-danger">
+            <div *ngIf="passwordConfirmation.errors.required">
+              Password Confirmation is required!
+            </div>
+            <div *ngIf="passwordConfirmation.errors.minlength">
+              Password Confirmation must be at least 6 characters long!
+            </div>
+          </div>
+
           <button
+            [disabled] = "registrationForm.invalid"
+            (click) = "register(registrationForm)"
             type="submit"
             class="btn btn-outline-success my-2 my-sm-0 booking-btn-main">
             Submit
           </button>
         </form>
+        <!-- <div>
+          {{ diagnostic() }} <br />
+          {{formDiagnostic}}
+        </div> -->
         <!-- <div class="alert alert-danger">
           <p *ngFor="let error of errors">
             {{error.detail}}
