@@ -11,10 +11,11 @@ export class RentalService {
   constructor(private http: HttpClient) { }
 
   public getRentals(): Observable<RentalModel[]> {
-    return this.http.get<RentalModel[]>(`http://localhost:4200/api/v1/rentals/`);
+    return this.http.get<RentalModel[]>(`/api/v1/rentals/`);
   }
 
   public getRentalById(rentalId: string): Observable<RentalModel> {
-    return this.http.get<RentalModel>(`http://localhost:4200/api/v1/rentals/${rentalId}`);
+    // http://localhost:4200/api/v1/rentals/${rentalId}
+    return this.http.get<RentalModel>(`/api/v1/rentals/${rentalId}`);
   }
 }
