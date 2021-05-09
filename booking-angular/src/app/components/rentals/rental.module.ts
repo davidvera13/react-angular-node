@@ -10,6 +10,7 @@ import {FirstUpperLetterPipe} from '../../pipes/firstUpperLetter.pipe';
 import {HighlightDirective} from '../../directives/custom.directive';
 import {NgCustomIfDirective} from '../../directives/ng-custom-if.directive';
 import {NgCustomForDirective} from '../../directives/ng-custom-for.directive';
+import {HttpClientModule} from "@angular/common/http";
 
 const routes: Routes = [
   {
@@ -33,6 +34,10 @@ const routes: Routes = [
     NgCustomIfDirective,
     NgCustomForDirective
   ],
-  imports: [RouterModule.forChild(routes), CommonModule]
+  imports: [
+    RouterModule.forChild(routes),
+    CommonModule,
+    HttpClientModule
+  ]
 })
 export class RentalModule { }
