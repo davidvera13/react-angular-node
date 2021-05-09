@@ -6,33 +6,70 @@
         <!-- <div *ngIf="notifyMessage" class="alert alert-success">
           Some message
         </div> -->
-        <form>
+        <!-- reactive form -->
+        <form [formGroup]="loginForm">
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email"
-                   class="form-control"
-                   id="email">
-            <!-- <div class="alert alert-danger">
-              <div>
-                Email is required.
-              </div>
-              <div>
-                Must be valid email format!
-              </div>
-            </div> -->
+            <input
+              formControlName="email"
+              type="email"
+              class="form-control"
+              id="email">
           </div>
+          <div
+            class="alert alert-danger"
+            *ngIf="email.invalid && !email.pristine"
+            >
+            <div *ngIf="email.errors.required">
+              Email is required
+            </div>
+            <div *ngIf="email.errors.pattern">
+              Must be valid email format
+            </div>
+            <div *ngIf="email.errors.forbiddenEmail">
+              This email is not allowed!
+            </div>
+
+          </div>
+
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password"
-                   class="form-control"
-                   id="password">
+            <input
+              formControlName="password"
+              type="password"
+              class="form-control"
+              id="password">
           </div>
+          <div
+            class="alert alert-danger"
+            *ngIf="password.invalid && !password.pristine"
+          >
+            <div *ngIf="password.errors.required">
+              Password is required
+            </div>
+            <div *ngIf="password.errors.minlength">
+              Minimum length of password is 6 characters
+            </div>
+          </div>
+          <!-- <div
+            *ngIf="loginForm.errors?.sameAs && !password.pristine"
+            class="alert alert-danger">
+            Password  must be the same as email!
+          </div> -->
+
           <button
+            (click)="login()"
+            [disabled]="loginForm.invalid"
             type="submit"
             class="btn btn-outline-success my-2 my-sm-0 booking-btn-main">
             Submit
           </button>
         </form>
+
+        <div>
+          {{formDiagnostic}}
+        </div>
+
         <!-- <div *ngIf="errors.length > 0" class="alert alert-danger">
           <p *ngFor="let error of errors">
             {{error.detail}}
