@@ -9,7 +9,7 @@ const userSchema = new Schema({
         maxlength: [32, 'Invalid length. Max is 32 chars'],
         minlength: [4, 'Invalid length, Min is 4 chars']
     },
-    description: {
+    email: {
         type: String,
         required: true,
         unique: true,
