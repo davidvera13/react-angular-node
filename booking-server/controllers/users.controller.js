@@ -6,34 +6,17 @@ require('dotenv').config()
 exports.login = (req, res) => {
     const { email, password } = req.body;
     if(!password || !email ) {
-        return res.status(422).send(
-            {
-                error: "missing data",
-                details: "Email, password or username are missing"
-            });
+        return res.status(422).send({error: "missing data", details: "Email, password or username are missing"});
     }
 
     User.findOne({email}, (error, existingUser) => {
         if (error) {
-            return res.status(422).send(
-                {
-                    errors: [
-                        {
-                            title: 'DB Error',
-                            detail: 'Oooops, something went wrong!'
-                        }]
-                });
+            // return res.status(422).send({errors: [{title: 'DB Error', detail: 'Oooops, something went wrong!'}]});
+            return res.mongoError(error);
         }
 
         if(!existingUser) {
-            return res.status(422).send(
-                {
-                    errors: [
-                        {
-                            title: 'Invalid email',
-                            detail: 'User with provided email doesn\'t exist'
-                        }]
-                });
+            return res.status(422).send({errors: [{title: 'Invalid email', detail: 'User with provided email doesn\'t exist'}]});
         }
 
         // compare passwords
@@ -47,14 +30,7 @@ exports.login = (req, res) => {
 
             return res.json({ token: token })
         } else {
-            return res.status(422).send(
-                {
-                    errors: [
-                        {
-                            title: 'Invalid password',
-                            detail: 'Your password is incorrect'
-                        }]
-                });
+            return res.status(422).send({errors: [{title: 'Invalid password', detail: 'Your password is incorrect'}]});
         }
     });
 
@@ -63,43 +39,15 @@ exports.login = (req, res) => {
 
 exports.register = (req, res) => {
     const { username, email, password, passwordConfirmation} = req.body;
-    if(!password || !email || !username) {
-        return res.status(422).send(
-            {
-                error: "missing data",
-                details: "Email, password or username are missing"
-            });
-    }
-    if(password !== passwordConfirmation) {
-        return res.status(422).send(
-            {
-                error: "Invalid password",
-                details: "Password is not matching confirmation password"
-            });
-    }
+
     User.findOne({email}, (error, existingUser) => {
         if (error) {
-            return res.status(422).send(
-                {
-                    errors: [
-                        {
-                            title: 'DB Error',
-                            detail: 'Oooops, something went wrong!'
-                        }]
-                });
+            // return res.status(422).send( { errors: [ { title: 'DB Error',  detail: 'Oooops, something went wrong!'}]});
+            return res.mongoError(error);
         }
 
         if (existingUser) {
-            return res.status(422)
-                .send(
-                    {
-                        errors: [
-                            {
-                                title: 'Invalid Email',
-                                detail: 'User with provided email already exists!'
-                            }]
-
-                });
+            return res.status(422).send({ errors: [ { title: 'Invalid Email', detail: 'User with provided email already exists!' }]});
         }
 
         const user = new User({username, email, password});
@@ -107,7 +55,8 @@ exports.register = (req, res) => {
             if (error) {
                 console.log(error.message);
                 console.log(error.stack);
-                return res.status(422).send({errors: [{title: 'DB Error', detail: 'Oooops, something went wrong!'}]});
+                // return res.status(422).send({errors: [{title: 'DB Error', detail: 'Oooops, something went wrong!'}]});
+                return res.mongoError(error);
             }
             return res.json({status: 'registered'});
         });
@@ -128,23 +77,15 @@ exports.isUserAuthenticatedMiddleware = (req, res, next) => {
         if(!decodedToken) { return notAuthorized(res); }
         User.findById(decodedToken.sub, (err, existingUser) => {
             if (err) {
-                return res.status(422).send(
-                    {
-                        errors: [
-                            {
-                                title: 'DB Error',
-                                detail: 'Oooops, something went wrong!'
-                            }]
-                    });
+                return res.mongoError(err)
+                // return res.status(422).send( { errors: [ { title: 'DB Error', detail: 'Oooops, something went wrong!' }] });
             }
-
             if(existingUser) {
                 res.locals.user = existingUser;
                 next();
             } else {
                 return notAuthorized(res);
             }
-
         })
 
     } else {
@@ -153,13 +94,7 @@ exports.isUserAuthenticatedMiddleware = (req, res, next) => {
 }
 
 function notAuthorized(res) {
-    return res.status(401).send(
-        { errors: [
-                {
-                    title: 'Not authorized',
-                    detail: 'This resource is available to logged in users only'
-                }]
-        });
+    return res.status(401).send( { errors: [ { title: 'Not authorized',  detail: 'This resource is available to logged in users only' }] });
 }
 
 function parseToken(token) {

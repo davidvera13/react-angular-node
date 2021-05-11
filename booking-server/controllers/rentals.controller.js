@@ -4,14 +4,8 @@ const Rental = require('../models/rental.model')
 exports.getRentals = (req, res) => {
     Rental.find({}, (error, rentals) => {
         if (error) {
-            return Rental.sendError(res, { status: 422, detail: 'Cannot retrieve rental data' });
-            // return res.status(422).send(
-            //     { errors: [
-            //         {
-            //             title: 'Rental Error',
-            //             message: 'Cannot retrieve rental data'
-            //         }]
-            //     });
+            // return Rental.sendError(res, { status: 422, detail: 'Cannot retrieve rental data' });
+            return res.mongoError(error);
         } else {
             // return results
             return res.json(rentals)
@@ -24,7 +18,8 @@ exports.getRental = (req, res) => {
     const {rentalId} = req.params;
     Rental.findById(rentalId, (error, rental) => {
         if (error) {
-            return Rental.sendError(res, { status: 422, detail: 'Cannot retrieve rental data' })
+            // return Rental.sendError(res, { status: 422, detail: 'Cannot retrieve rental data' })
+            return res.mongoError(error);
         } else {
             return res.json(rental)
         }
@@ -35,30 +30,12 @@ exports.getRental = (req, res) => {
 exports.createRental = (req, res) => {
     // we expect a payload
     const payload = req.body;
-    // create an instance based on the model or use a create function
-
-    // first creation method
-    // const rental = new Rental(payload);
-    // rental.save((error, storedRental) => {
-    //     if (error) {
-    //         return res.status(422).send(
-    //             { errors:
-    //                 [
-    //                     {
-    //                         title: 'Rental Error',
-    //                         message: 'Cannot post rental data'
-    //                     }
-    //                 ]
-    //             });
-    //     } else {
-    //         return res.json({ message: `rental with id ${storedRental._id} was added`});
-    //     }
-    // });
 
     // using model
     Rental.create(payload, (error, storedRental) => {
         if (error) {
-            return Rental.sendError(res, { status: 422, detail: 'Cannot retrieve rental data' });
+            // return Rental.sendError(res, { status: 422, detail: 'Cannot retrieve rental data' });
+            return res.mongoError(error);
         } else {
             return res.json({ message: `rental with id ${storedRental._id} was added`});
         }
