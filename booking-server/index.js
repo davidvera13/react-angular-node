@@ -35,5 +35,7 @@ app.listen(PORT, () => {
 // middleware declaration
 app.use(bodyParser.json());
 
+
+
 app.use('/api/v1/rentals', rentalRoutes);
 app.use('/api/v1/users', usersRoutes);

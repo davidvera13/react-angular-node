@@ -114,3 +114,55 @@ exports.register = (req, res) => {
     });
 
 };
+
+exports.secret = (req, res) => {
+    return res.json({message: 'Custom message for authorized users'})
+}
+
+// authenticated middleware
+exports.isUserAuthenticatedMiddleware = (req, res, next) => {
+    const token = req.headers.authorization;
+    if (token) {
+        // parsing token
+        const decodedToken = parseToken(token);
+        if(!decodedToken) { return notAuthorized(res); }
+        User.findById(decodedToken.sub, (err, existingUser) => {
+            if (err) {
+                return res.status(422).send(
+                    {
+                        errors: [
+                            {
+                                title: 'DB Error',
+                                detail: 'Oooops, something went wrong!'
+                            }]
+                    });
+            }
+
+            if(existingUser) {
+                res.locals.user = existingUser;
+                next();
+            } else {
+                return notAuthorized(res);
+            }
+
+        })
+
+    } else {
+        return notAuthorized(res);
+    }
+}
+
+function notAuthorized(res) {
+    return res.status(401).send(
+        { errors: [
+                {
+                    title: 'Not authorized',
+                    detail: 'This resource is available to logged in users only'
+                }]
+        });
+}
+
+function parseToken(token) {
+    return jwt.verify(token.split(' ')[1], process.env.JWT_SECRET) || null;
+
+}
