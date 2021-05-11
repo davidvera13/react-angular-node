@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -26,6 +27,19 @@ const userSchema = new Schema({
     }
 });
 
+// this method will be callee before 'save' function
+userSchema.pre('save', function(next) {
+    // retrieve the user we try to persist
+    const user = this;
+    // using bcrypt with salt
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(user.password, salt, (err, hash) => {
+            user.password = hash;
+            next();
+        })
+    })
+
+});
 
 // using static call 
 userSchema.statics.sendError = function(res, config) {
