@@ -163,6 +163,9 @@ function notAuthorized(res) {
 }
 
 function parseToken(token) {
-    return jwt.verify(token.split(' ')[1], process.env.JWT_SECRET) || null;
-
+    try {
+        return  jwt.verify(token.split(' ')[1], process.env.JWT_SECRET);
+    } catch (error) {
+        return null;
+    }
 }
