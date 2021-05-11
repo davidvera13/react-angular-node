@@ -9,9 +9,11 @@ require('dotenv').config()
 
 // routes
 const rentalRoutes = require('./routes/rentals.routes');
+const usersRoutes = require('./routes/users.routes');
 
 // models
 const Rental = require('./models/rental.model');
+const User = require('./models/user.model');
 
 const app  = express();
 const PORT = process.env.PORT || 3001;
@@ -32,4 +34,6 @@ app.listen(PORT, () => {
 });
 // middleware declaration
 app.use(bodyParser.json());
+
 app.use('/api/v1/rentals', rentalRoutes);
+app.use('/api/v1/users', usersRoutes);
