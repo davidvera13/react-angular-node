@@ -38,8 +38,13 @@ userSchema.pre('save', function(next) {
             next();
         })
     })
-
 });
+
+// this method will compare password with stored bcrypt password
+userSchema.methods.hasSamePassword = function(providedPassword) {
+    return bcrypt.compareSync(providedPassword, this.password);
+}
+
 
 // using static call 
 userSchema.statics.sendError = function(res, config) {
