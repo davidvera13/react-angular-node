@@ -34,7 +34,6 @@ exports.createRental = (req, res) => {
     // using model
     Rental.create(payload, (error, storedRental) => {
         if (error) {
-            // return Rental.sendError(res, { status: 422, detail: 'Cannot retrieve rental data' });
             return res.mongoError(error);
         } else {
             return res.json({ message: `rental with id ${storedRental._id} was added`});

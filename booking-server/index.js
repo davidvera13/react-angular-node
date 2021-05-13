@@ -5,7 +5,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
-const { mongoErrorsProvider } = require('./middlewares/index.middleware');
+const { provideErrorHandler } = require('./middlewares/index.middleware');
 require('dotenv').config();
 
 
@@ -36,7 +36,7 @@ app.listen(PORT, () => {
 });
 // middleware declaration
 app.use(bodyParser.json());
-app.use(mongoErrorsProvider);
+app.use(provideErrorHandler);
 
 
 app.use('/api/v1/rentals', rentalRoutes);
