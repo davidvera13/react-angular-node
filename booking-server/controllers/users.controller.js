@@ -34,7 +34,7 @@ exports.login = (req, res) => {
             return res.json({ token: token })
         } else {
             // return res.status(422).send({errors: [{title: 'Invalid password', detail: 'Your password is incorrect'}]});
-            return res.apiError({ title: 'Invalid password', detail: 'Your password is incorrect'});
+            return res.apiError({ title: 'Invalid password', details: 'Your password is incorrect'});
         }
     });
 
@@ -46,10 +46,10 @@ exports.register = (req, res) => {
 
     // fix password not matching
     if (password !== passwordConfirmation) {
-        return res.apiError({ title: 'Invalid password', detail: 'Password is not maching confirmation password!'});
+        return res.apiError({ title: 'Invalid password', details: 'Password is not maching confirmation password!'});
     }
     if (!password || !email) {
-        return res.apiError({ title: 'Missing Data', detail: 'Email or password is missing!'});
+        return res.apiError({ title: 'Missing Data', details: 'Email or password is missing!'});
     }
 
     User.findOne({email}, (error, existingUser) => {
@@ -60,7 +60,7 @@ exports.register = (req, res) => {
 
         if (existingUser) {
             // return res.status(422).send({ errors: [ { title: 'Invalid Email', detail: 'User with provided email already exists!' }]});
-            return res.apiError({ title: 'Invalid Email', detail: 'User with provided email already exists!' })
+            return res.apiError({ title: 'Invalid Email', details: 'User with provided email already exists!' })
         }
 
         const user = new User({username, email, password});

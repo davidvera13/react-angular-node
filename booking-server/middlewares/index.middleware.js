@@ -1,10 +1,10 @@
 exports.provideErrorHandler = (req, res, next) => {
 
     res.apiError = config => {
-        const { status = 422, title, detail } = config;
+        const { status = 422, title, details } = config;
         return res
             .status(status)
-            .send({errors: [{title, detail}]})
+            .send({errors: [{title, details}]})
     }
 
 
@@ -17,10 +17,10 @@ exports.provideErrorHandler = (req, res, next) => {
             dbError.name === 'ValidationError') {
             const errors = dbError[errorField];
             for (let property in errors) {
-                normalizedErrors.push({title: property, detail: errors[property].message});
+                normalizedErrors.push({title: property, details: errors[property].message});
             }
         } else {
-            normalizedErrors.push({title: 'Db Error', detail: 'Ooops, something went wrong!'});
+            normalizedErrors.push({title: 'Db Error', details: 'Ooops, something went wrong!'});
         }
         return res.status(422).send({errors: normalizedErrors});
     }
