@@ -40,10 +40,18 @@ export const registerUser = (registrationData) => {
     return axios
         .post('/api/v1/users/register', registrationData)
         .catch(error => {
-            // console.log(error)
-            debugger;
             return Promise.reject(extractApiErrors(error.response || {}));
         });
 }
 
+
+export const loginUser = (loginData) => {
+    return axios
+        .post('/api/v1/users/login', loginData)
+        .then(res => res.data)
+        .catch(error => {
+            debugger;
+            return Promise.reject(extractApiErrors(error.response || {}));
+        });
+}
 

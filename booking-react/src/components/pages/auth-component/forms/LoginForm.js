@@ -1,10 +1,11 @@
 import React from 'react';
 import {useForm} from "react-hook-form";
 import { ErrorMessage } from '@hookform/error-message';
+import FormError from './FormError';
+
 
 
 const LoginForm = ({onSubmit}) => {
-    debugger;
     // eslint-disable-next-line
     const { register, handleSubmit, formState: { errors } } = useForm({
         criteriaMode: "all"
@@ -18,7 +19,6 @@ const LoginForm = ({onSubmit}) => {
 
     // eslint-disable-next-line
     const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    debugger;
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
@@ -42,14 +42,18 @@ const LoginForm = ({onSubmit}) => {
                     id="email" />
             </div>
             <div>
-                <ErrorMessage as={<Error />} errors={errors} name="email">
-                    {({ messages }) =>
-                        messages &&
-                        Object.entries(messages).map(([type, message]) => (
-                            <p key={type}>HELLO<div className='alert alert-danger'>{message}</div></p>
-                        ))
-                    }
-                </ErrorMessage>
+                {/*<ErrorMessage as={<Error />} errors={errors} name="email">*/}
+                {/*    {({ messages }) =>*/}
+                {/*        messages &&*/}
+                {/*        Object.entries(messages).map(([type, message]) => (*/}
+                {/*            <p key={type}><div className='alert alert-danger'>{message}</div></p>*/}
+                {/*        ))*/}
+                {/*    }*/}
+                {/*</ErrorMessage>*/}
+                
+                <FormError errors={errors} name="email">
+                    {(message) => <p>{message}</p>}
+                </FormError>
             </div>
 
             <div className="form-group">
@@ -78,13 +82,16 @@ const LoginForm = ({onSubmit}) => {
             </div>
             <div>
                 <ErrorMessage as={<Error />} errors={errors} name="password">
-                    {({ messages }) =>
-                        messages &&
-                        Object.entries(messages).map(([type, message]) => (
-                            <p key={type}>{message}</p>
-                        ))
-                    }
+                    {({message}) => <p>{message}</p>}
                 </ErrorMessage>
+                {/*<ErrorMessage as={<Error />} errors={errors} name="password">*/}
+                {/*    {({ messages }) =>*/}
+                {/*        messages &&*/}
+                {/*        Object.entries(messages).map(([type, message]) => (*/}
+                {/*            <p key={type}>{message}</p>*/}
+                {/*        ))*/}
+                {/*    }*/}
+                {/*</ErrorMessage>*/}
             </div>
 
             <button
