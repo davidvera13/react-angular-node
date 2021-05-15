@@ -7,24 +7,27 @@ const { createContext } = React;
 
 const AuthContext = createContext(null);
 
-export const AuthBaseProvider = (props) => {
+// (props)
+export const AuthBaseProvider = ({ children, dispatch }) => {
 
     const decodeToken = token => {
-        const decoded = jwt.decode(token);
-        console.log(decoded)
-        return decoded;
+        return jwt.decode(token);
     }
 
     const signIn = loginData => {
         debugger;
-        console.log("Props: ");
-        console.log(props);
+        // const props = { children, dispatch };
+        // console.log(props);
         return loginUser(loginData)
             .then(({token}) => {
                 localStorage.setItem('token', token);
                 const decodedToken = decodeToken(token);
-                console.log('decoded token: ');
                 console.log(decodedToken);
+
+                dispatch({
+                    type: 'USER_AUTHENTICATED',
+                    username: decodedToken.username
+                });
                 return token;
             })
     };
@@ -35,7 +38,7 @@ export const AuthBaseProvider = (props) => {
 
     return (
         <AuthContext.Provider value={authApi}>
-            {props.children}
+            {children}
         </AuthContext.Provider>
     )
 }

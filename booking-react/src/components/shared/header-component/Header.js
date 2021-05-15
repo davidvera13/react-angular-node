@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { Link } from "react-router-dom";
+import {connect} from "react-redux";
 
 
-const Header = () => {
+const Header = ({ username, isAuth }) => {
     return(
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <Link className="navbar-brand" to="/">Booking</Link>
@@ -19,33 +20,55 @@ const Header = () => {
                     <button className="btn btn-outline-success my-2 my-sm-0 btn-booking-main" type="submit">Search</button>
                 </form>
                 <ul className="navbar-nav ml-auto">
+                    { isAuth &&
+                        <li className="nav-item">
+                            <div className="nav-link">Hi, { username }</div>
+                        </li>
+                    }
                     <li className="nav-item active">
                         <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
                     </li>
-                    <li className="nav-item dropdown">
-                        <Link className="nav-link dropdown-toggle" to="/" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Manage
-                        </Link>
-                        <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <Link className="dropdown-item" to="/">Action</Link>
-                            <Link className="dropdown-item" to="/">Another action</Link>
-                            <div className="dropdown-divider">&nbsp;</div>
-                            <Link className="dropdown-item" to="/">Something else here</Link>
-                        </div>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/login">Login</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/register">Register</Link>
-                    </li>
+                    { isAuth &&
+                        <>
+                            <li className="nav-item dropdown">
+                                <Link className="nav-link dropdown-toggle" to="/" id="navbarDropdown" role="button"
+                                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Manage
+                                </Link>
+                                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <Link className="dropdown-item" to="/">Action</Link>
+                                    <Link className="dropdown-item" to="/">Another action</Link>
+                                    <div className="dropdown-divider">&nbsp;</div>
+                                    <Link className="dropdown-item" to="/">Something else here</Link>
+                                </div>
+                            </li>
+                            <li className="nav-item">
+                                <div className="nav-link" >Logout</div>
+                            </li>
+                        </>
+
+                    }
+                    { !isAuth &&
+                        <React.Fragment>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/login">Login</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/register">Register</Link>
+                            </li>
+                        </React.Fragment>
+                    }
+
+
                 </ul>
 
             </div>
         </nav>
     )
-
 }
 
-export default Header;
+const mapStateToProps = ({auth: { username, isAuth}}) => {
+    return { username, isAuth }
+}
+
+export default connect(mapStateToProps)(Header);
