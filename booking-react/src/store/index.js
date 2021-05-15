@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import rentals  from './reducers/rentals';
 import rental from './reducers/rental';
+import auth from './reducers/auth';
 // import ReduxThunk from 'redux-thunk'
 import thunk from "redux-thunk";
 
@@ -21,7 +22,7 @@ const addPromiseToDispatch = (store) => {
 export function initStore() {
     // PURE Functions
     const reducers = combineReducers({
-        rentals, rental
+        rentals, rental, auth
     });
 
     // const reduxExtension = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
