@@ -5,16 +5,19 @@ import { initStore } from "../store";
 import Header from "./shared/header-component/Header";
 import Routes from "./router/Routes";
 import { Provider } from 'react-redux';
+import { AuthProvider } from "../providers/auth.provider";
 
 const store = initStore();
 const App = () => {
 
     return (
         <Provider store={store}>
-            <Router>
-                <Header />
-                <Routes />
-            </Router>
+            <AuthProvider>
+                <Router>
+                    <Header />
+                    <Routes />
+                </Router>
+            </AuthProvider>
         </Provider>
     )
 }

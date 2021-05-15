@@ -14,7 +14,6 @@ class Register extends React.Component {
 
     // eslint-disable-next-line
     signUp = (registerData) => {
-        debugger;
         registerUser(registerData)
             .then(() => {
                 console.log('Success !')

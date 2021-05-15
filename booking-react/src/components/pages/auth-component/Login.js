@@ -1,9 +1,9 @@
 import React from 'react';
 import LoginForm from "./forms/LoginForm";
-import { loginUser } from '../../../store/actions/index';
+// import { loginUser } from '../../../store/actions/index';
 import {Redirect} from "react-router-dom";
 import ApiErrors from '../auth-component/forms/ApiErrors'
-
+import { withAuth } from "../../../providers/auth.provider";
 
 class Login extends React.Component {
 
@@ -14,10 +14,8 @@ class Login extends React.Component {
 
     // eslint-disable-next-line
      signIn = (loginData) => {
-        // console.log(loginData)
-        // alert(JSON.stringify(loginData));
-         loginUser(loginData)
-             .then((token) => {
+         this.props.auth.signIn(loginData)
+             .then(token => {
                  console.log('token:')
                  console.log(token)
                  this.setState({shouldRedirect: true});
@@ -41,8 +39,8 @@ class Login extends React.Component {
                     <div className="col-md-5">
                         <h1 className="page-title">Login</h1>
                         {/* <!-- <div className="alert alert-success">
-        Some message
-      </div> --> */}
+                            Some message
+                          </div> --> */}
                         <LoginForm onSubmit={this.signIn} />
                         <ApiErrors errors = {errors} />
                     </div>
@@ -58,4 +56,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default withAuth(Login);
