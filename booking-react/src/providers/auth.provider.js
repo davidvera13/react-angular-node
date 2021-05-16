@@ -47,8 +47,13 @@ export const AuthBaseProvider = ({ children, dispatch }) => {
             })
     };
 
+    const signOut = () => {
+        localStorage.removeItem('token');
+        dispatch({ type: 'USER_DISCONNECTION'})
+    }
+
     const authApi = {
-        signIn, checkAuthState
+        signIn, checkAuthState, signOut
     }
 
     return (

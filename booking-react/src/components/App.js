@@ -23,7 +23,7 @@ const BookingApp = () => {
 
     return (
         <Router>
-            <Header />
+            <Header logout={authService.signOut} />
             <Routes />
         </Router>
     )

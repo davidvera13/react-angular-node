@@ -5,6 +5,8 @@ const initAuthReducer = () => {
         switch(action.type) {
             case 'USER_AUTHENTICATED':
                 return true;
+            case 'USER_DISCONNECTION':
+                return false;
             default:
                 return state;
         }
@@ -14,8 +16,9 @@ const initAuthReducer = () => {
         switch (action.type) {
             case 'USER_AUTHENTICATED':
                 return action.username;
+            case 'USER_DISCONNECTION':
+                return '';
             default:
-                // eslint-disable-next-line
                 return state;
         }
     };

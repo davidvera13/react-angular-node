@@ -3,6 +3,7 @@ import RentalHome from "../pages/home-component/RentalHome";
 import Login from "../pages/auth-component/Login";
 import Register from "../pages/auth-component/Register";
 import RentalDetails from "../pages/rentaldetails-component/RentalDetails";
+import SecretPage from "../pages/secretPage";
 import React from "react";
 
 const Routes = () => {
@@ -20,6 +21,9 @@ const Routes = () => {
                 </Route>
                 <Route path = '/register'>
                     <Register />
+                </Route>
+                <Route path = '/secret'>
+                    <SecretPage />
                 </Route>
             </Switch>
         </div>
