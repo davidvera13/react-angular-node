@@ -1,9 +1,10 @@
 import React from 'react';
-import {loginUser} from "../store/actions";
+import {loginUser, userAuthenticated} from "../store/actions";
 import jwt from 'jsonwebtoken'
+import moment from 'moment';
 import {connect} from "react-redux";
 
-const { createContext } = React;
+const { createContext, useContext } = React;
 
 const AuthContext = createContext(null);
 
@@ -12,6 +13,23 @@ export const AuthBaseProvider = ({ children, dispatch }) => {
 
     const decodeToken = token => {
         return jwt.decode(token);
+    }
+
+    const getTokenExpiration = (decodedToken) => {
+        return moment.unix(decodedToken.exp);
+    }
+
+    const checkAuthState = () => {
+        const storedToken = getToken();
+        const decodedToken = decodeToken(storedToken);
+        // if moment().isBefore(getTokenExpiration(storedToken) token is valid
+        // example: 17:29 < 18:30
+        if (decodedToken && moment().isBefore(getTokenExpiration(decodedToken))) {
+            dispatch(userAuthenticated(decodedToken));
+        }
+    }
+    const getToken = () => {
+        return localStorage.getItem('token');
     }
 
     const signIn = loginData => {
@@ -23,17 +41,14 @@ export const AuthBaseProvider = ({ children, dispatch }) => {
                 localStorage.setItem('token', token);
                 const decodedToken = decodeToken(token);
                 console.log(decodedToken);
+                dispatch(userAuthenticated(decodedToken));
 
-                dispatch({
-                    type: 'USER_AUTHENTICATED',
-                    username: decodedToken.username
-                });
                 return token;
             })
     };
 
     const authApi = {
-        signIn
+        signIn, checkAuthState
     }
 
     return (
@@ -44,6 +59,9 @@ export const AuthBaseProvider = ({ children, dispatch }) => {
 }
 
 export const AuthProvider = connect()(AuthBaseProvider);
+export const useAuth = () => {
+    return useContext(AuthContext);
+}
 
 export const withAuth = Component => props => (
     <AuthContext.Consumer>

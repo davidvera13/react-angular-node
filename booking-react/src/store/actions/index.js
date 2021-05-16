@@ -55,3 +55,9 @@ export const loginUser = (loginData) => {
         });
 }
 
+export const userAuthenticated = (decodedToken) => {
+    return {
+        type: 'USER_AUTHENTICATED',
+        username: decodedToken.username
+    };
+}
