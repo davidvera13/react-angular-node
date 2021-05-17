@@ -28,8 +28,8 @@ class Register extends React.Component {
         const { shouldRedirect, errors } = this.state;
         if (shouldRedirect) {
             // redirect to login page
-            return <Redirect to="/login" />;
-            // <Redirect to={{pathname: '/login'}} />
+            // return <Redirect to="/login" />;
+            return <Redirect to={{pathname: '/login', state: { message: 'You have been successfully registered'}}} />
         };
 
         return(
@@ -38,13 +38,7 @@ class Register extends React.Component {
                     <div className="col-md-5">
                         <h1 className="page-title">Register</h1>
                         <RegisterForm onSubmit={this.signUp} />
-                        {/*{ errors && errors.length > 0 &&*/}
-                        {/*    <div className="alert alert-danger">*/}
-                        {/*        { errors.map(error => */}
-                        {/*            <p key={error.title}>{ error.detail }</p>)*/}
-                        {/*        }*/}
-                        {/*    </div>*/}
-                        {/*}*/}
+
                         <ApiErrors errors={errors} />
 
                     </div>
