@@ -4,6 +4,7 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {LoginForm} from "../shared/loginForm.model";
 import {catchError} from "rxjs/operators";
+import {extractApiErrors} from "../shared/helper/function";
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +16,8 @@ export class AuthService {
   register(formData: RegisterForm): Observable<any> {
     return this.http
       .post<any>(`/api/v1/users/register`, formData)
-      .pipe(catchError((error: HttpErrorResponse) => {
-        console.log(JSON.stringify(error));
-        let errors = [{title: 'Error', detail: 'Ooops something went wrong'}];
-        if (error && error.error && error.error.errors ) {
-          errors = error.error.errors;
-        }
-        return throwError(errors);
-      }));
+      .pipe(catchError((error: HttpErrorResponse) =>
+        throwError(extractApiErrors(error))
+      ));
   }
 }
