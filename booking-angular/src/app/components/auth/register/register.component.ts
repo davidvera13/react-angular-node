@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {RegisterForm} from "../../../shared/registerForm.model";
 import {NgForm} from "@angular/forms";
+import {AuthService} from "../../../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -12,7 +14,8 @@ export class RegisterComponent implements OnInit {
   emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 
-  constructor() {
+  constructor(private authService: AuthService,
+              private router: Router) {
     this.registerFormData =  new RegisterForm();
   }
 
@@ -24,6 +27,13 @@ export class RegisterComponent implements OnInit {
     if (form.invalid) {
       return;
     }
+    // the response is not used: just for printing purpose
+    this.authService
+      .register(this.registerFormData)
+      .subscribe(response => {
+        console.log(response);
+        this.router.navigate(['./login']).then();
+      });
   }
   validateInputs(form: NgForm): void {
     Object.keys(form.controls).forEach(controlName => {
