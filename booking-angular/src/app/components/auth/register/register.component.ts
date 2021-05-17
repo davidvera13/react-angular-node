@@ -34,7 +34,9 @@ export class RegisterComponent implements OnInit {
       .register(this.registerFormData)
       .subscribe(response => {
         console.log(response);
-        this.router.navigate(['./login']).then();
+        this.router.navigate(['/login'], {
+          queryParams: { message: 'You successfully registered'}
+        }).then();
       }, (errors: BookingApp.ApiError[]) => {
         console.log("Errors !!!");
         console.log(errors)
