@@ -1,12 +1,15 @@
+import React from "react";
 import {Route, Switch} from "react-router-dom";
 import RentalHome from "../pages/home-component/RentalHome";
 import Login from "../pages/auth-component/Login";
 import Register from "../pages/auth-component/Register";
 import RentalDetails from "../pages/rentaldetails-component/RentalDetails";
 import SecretPage from "../pages/secretPage";
-import React from "react";
+import AuthRoutes from "./AuthRoutes";
+import GuestRoutes from "./GuestRoutes";
 
 const Routes = () => {
+    debugger;
     return(
         <div className="container booking-container">
             <Switch>
@@ -16,15 +19,15 @@ const Routes = () => {
                 <Route path = '/rentals/:id'>
                     <RentalDetails />
                 </Route>
-                <Route path = '/login'>
+                <GuestRoutes path = '/login'>
                     <Login />
-                </Route>
-                <Route path = '/register'>
+                </GuestRoutes>
+                <GuestRoutes path = '/register'>
                     <Register />
-                </Route>
-                <Route path = '/secret'>
+                </GuestRoutes>
+                <AuthRoutes path = '/secret'>
                     <SecretPage />
-                </Route>
+                </AuthRoutes>
             </Switch>
         </div>
     )
