@@ -1,7 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, NgForm, Validators} from "@angular/forms";
 import {forbiddenEmailValidator, sameAsValidator } from "../../../validators/functions";
 import {ActivatedRoute, Router} from "@angular/router";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -12,12 +13,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   loginForm: FormGroup
   emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  errors: BookingApp.ApiError[] = [];
   message: string;
   // if we change from login after registration, we have the alert
   // displayed on the new page
   messageTimeOut: number;
 
+
   constructor(private fb: FormBuilder,
+              private authService: AuthService,
               private route: ActivatedRoute,
               private router: Router) { }
 
@@ -26,9 +30,21 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.checkMessage();
   }
 
-  ngOnDestroy(): void {
-    this.messageTimeOut && clearTimeout(this.messageTimeOut);
+
+  login() {
+    if (this.loginForm.invalid) {
+      return null;
+    }
+
+    return this.authService.login(this.loginForm.value)
+      .subscribe((token) => {
+        this.router.navigate(['./rentals']).then();
+        console.log(token);
+      }, (errors: BookingApp.ApiError[]) => {
+        this.errors = errors;
+      });
   }
+
 
   checkMessage(): void {
     this.route.queryParams.subscribe(params => {
@@ -46,9 +62,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
     });
   }
-
-
-
 
   initForm(): void {
     this.loginForm = this.fb.group({
@@ -77,14 +90,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     return this.loginForm.get('password');
   }
 
-  login() {
-    if (this.loginForm.invalid)
-      return;
-    alert(this.formDiagnostic)
-  }
-
   get formDiagnostic(): string {
     return JSON.stringify(this.loginForm.value)
   }
-
+  ngOnDestroy(): void {
+    this.messageTimeOut && clearTimeout(this.messageTimeOut);
+  }
 }
