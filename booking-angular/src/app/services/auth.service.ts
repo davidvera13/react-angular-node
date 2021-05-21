@@ -6,6 +6,7 @@ import {catchError, map } from "rxjs/operators";
 import {extractApiErrors} from "../shared/helper/function";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { DecodedToken } from '../shared/decodedToken.model'
+import * as moment from 'moment';
 
 
 
@@ -32,8 +33,7 @@ export class AuthService {
       .post<any>(`/api/v1/users/login`, formData)
       .pipe(
         map((response: any) => {
-          // here we get the token
-          const storedToken = this.saveToken(response.token)
+          this.saveToken(response.token)
           return response.token;
 
         }),
@@ -48,7 +48,28 @@ export class AuthService {
     if(!decodedToken) {
       return null;
     }
+    this.decodedToken = decodedToken;
+
     localStorage.setItem('token', token)
     return token;
+  }
+
+  get isAuthenticated(): boolean {
+    const isAuth = moment().isBefore(this.expiration);
+    console.log(isAuth)
+    return isAuth;
+    return isAuth;
+  }
+
+  get username(): string {
+    const username = this.decodedToken.username;
+    console.log(username)
+    return username;
+  }
+
+  private get expiration() {
+    const exp = moment.unix(this.decodedToken.exp);
+    console.log(exp)
+    return exp;
   }
 }
