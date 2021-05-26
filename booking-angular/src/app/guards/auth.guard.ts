@@ -7,7 +7,7 @@ import {AuthService} from "../services/auth.service";
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  private url: string;
+  // private url: string;
 
   constructor(private authService: AuthService,
               private router: Router) {
@@ -16,35 +16,39 @@ export class AuthGuard implements CanActivate {
               state: RouterStateSnapshot): Observable<boolean | UrlTree> |
                                           Promise<boolean | UrlTree> |
                                           boolean | UrlTree {
-    this.url = state.url;
-    return this.authService.isAuthenticated ?
-      this.handleAuthState() : this.handleNotAuthState();
-
+    // this.url = state.url;
+    // return this.authService.isAuthenticated ?
+    //   this.handleAuthState() : this.handleNotAuthState();
+    return this.checkCanNavigate(state.url);
   }
 
-  private handleAuthState(): boolean {
-    if(this.isAuthPage) {
-      this.router.navigate(['/rentals']).then();
-      return false;
-    }
-    return true;
-  }
-
-  private handleNotAuthState(): boolean {
-    if(this.isAuthPage) {
+  // private handleAuthState(): boolean {
+  //   if(this.isAuthPage) {
+  //     this.router.navigate(['/rentals']).then();
+  //     return false;
+  //   }
+  //   return true;
+  // }
+  //
+  // private handleNotAuthState(): boolean {
+  //   if(this.isAuthPage) {
+  //     return true;
+  //   }
+  //   this.router.navigate(['/login']).then();
+  //   return false;
+  // }
+  //
+  // private get isAuthPage(): boolean {
+  //   if(this.url.includes('login') || this.url.includes('register')) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
+  private checkCanNavigate(url: string): boolean {
+    if(this.authService.isAuthenticated) {
       return true;
     }
     this.router.navigate(['/login']).then();
     return false;
   }
-
-
-  private get isAuthPage(): boolean {
-    if(this.url.includes('login') || this.url.includes('register')) {
-      return true;
-    }
-    return false;
-  }
-
-
 }
