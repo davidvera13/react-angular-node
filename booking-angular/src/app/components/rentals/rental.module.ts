@@ -11,6 +11,8 @@ import {HighlightDirective} from '../../directives/custom.directive';
 import {NgCustomIfDirective} from '../../directives/ng-custom-if.directive';
 import {NgCustomForDirective} from '../../directives/ng-custom-for.directive';
 import {HttpClientModule} from "@angular/common/http";
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import {AuthGuard} from "../../guards/auth.guard";
 
 const routes: Routes = [
   {
@@ -18,6 +20,7 @@ const routes: Routes = [
     component: RentalsComponent,
     children: [
       { path: '', component: RentalsListingComponent},
+      { path: 'secret', component: LandingPageComponent, canActivate: [AuthGuard]},
       { path: ':rentalId', component: RentalDetailsComponent}
     ]},
 ];
@@ -32,7 +35,8 @@ const routes: Routes = [
     FirstUpperLetterPipe,
     HighlightDirective,
     NgCustomIfDirective,
-    NgCustomForDirective
+    NgCustomForDirective,
+    LandingPageComponent
   ],
   imports: [
     RouterModule.forChild(routes),
