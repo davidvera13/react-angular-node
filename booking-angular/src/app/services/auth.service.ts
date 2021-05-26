@@ -42,6 +42,24 @@ export class AuthService {
       ));
   }
 
+  logout() {
+    localStorage.removeItem('token');
+    this.decodedToken = new DecodedToken();
+  }
+  checkAuthentication(): boolean {
+    debugger;
+    const authToken = localStorage.getItem('token');
+    if(!authToken) {
+      return false;
+    }
+    const decodedToken = this.jwtHelperService.decodeToken(authToken);
+    if(!decodedToken) {
+      return false;
+    }
+    this.decodedToken = decodedToken;
+    return true;
+  }
+
   private saveToken(token): string | null {
     const decodedToken = this.jwtHelperService.decodeToken(token)
     console.log(decodedToken)
