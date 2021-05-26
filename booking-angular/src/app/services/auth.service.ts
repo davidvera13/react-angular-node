@@ -16,6 +16,7 @@ import * as moment from 'moment';
 export class AuthService {
   jwtHelperService = new JwtHelperService();
   private decodedToken: DecodedToken;
+  redirectUrl: string;
 
   constructor(private http: HttpClient) {
     this.decodedToken = new DecodedToken();

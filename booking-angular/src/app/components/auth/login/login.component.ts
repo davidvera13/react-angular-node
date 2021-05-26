@@ -38,7 +38,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     return this.authService.login(this.loginForm.value)
       .subscribe((token) => {
-        this.router.navigate(['./rentals']).then();
+        if(this.authService.redirectUrl) {
+          this.router
+            .navigate([this.authService.redirectUrl])
+            .then();
+          this.authService.redirectUrl = null;
+        } else {
+          this.router.navigate(['./rentals']).then();
+        }
         console.log(token);
       }, (errors: BookingApp.ApiError[]) => {
         this.errors = errors;
