@@ -1,9 +1,11 @@
-export const capitalize = (value) => {
-    // eslint-disable-next-line
-    if(!value || typeof value !== 'string ') {
+export const capitalize = value => {
+    if (!value || typeof value !== 'string') {
         return '';
     }
-    return value.split(' ')
-        .map(word => word[0].toUpperCase() + word.slice(1))
-        .join(' ');
+
+    // San Francisco
+    return value
+        .split(' ') // ['san', 'francisco']
+        .map(word => word[0].toUpperCase() + word.slice(1)) // ['San', 'Francisco']
+        .join(' ')  // San Francisco
 }

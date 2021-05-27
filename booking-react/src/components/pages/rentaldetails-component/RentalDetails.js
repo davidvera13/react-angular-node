@@ -17,6 +17,12 @@ class RentalDetails extends React.Component {
         this.props.dispatch(fetchRentalById(id))
     }
 
+    get location() {
+        const { rental: { street, city } } = this.props;
+        return street && city && city + ', ' + street;
+
+    }
+
     render() {
         const { rental, isFetching } = this.props;
         if (isFetching) {
@@ -31,7 +37,7 @@ class RentalDetails extends React.Component {
                             <img src={rental.image} alt={rental.title} />
                         </div>
                         <div className="col-md-6">
-                            <TomMap />
+                            <TomMap location={this.location} />
                         </div>
                     </div>
                 </div>
