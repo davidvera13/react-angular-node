@@ -1,14 +1,14 @@
 import React, {useEffect} from 'react';
-import tt from '@tomtom-international/web-sdk-maps';
+import { useMap } from '../../../providers/map.provider'
+
 import './tomMap.scss';
 
 const TomMap = () => {
+    const mapService = useMap();
+
     useEffect(() => {
-        const map = tt.map({
-            key: '7ue0kJMVPHA1YzNjBc3ktsGYYkoZdgMD',
-            container: 'map'
-        });
-        map.addControl(new tt.NavigationControl());
+        mapService.initMap();
+
     }, [])
 
     return <div id="map"> </div>

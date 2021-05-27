@@ -6,12 +6,15 @@ import Header from "./shared/header-component/Header";
 import Routes from "./router/Routes";
 import { Provider } from 'react-redux';
 import { AuthProvider, useAuth } from "../providers/auth.provider";
+import { MapProvider } from "../providers/map.provider";
 
 const store = initStore();
 const Providers = ({ children }) =>
     <Provider store={store}>
         <AuthProvider>
-            {children}
+            <MapProvider apiKey="7ue0kJMVPHA1YzNjBc3ktsGYYkoZdgMD">
+                {children}
+            </MapProvider>
         </AuthProvider>
     </Provider>
 
