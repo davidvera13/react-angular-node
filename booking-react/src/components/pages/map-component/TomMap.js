@@ -1,22 +1,27 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useCallback, useRef } from 'react';
 import { useMap } from '../../../providers/map.provider'
 
 import './tomMap.scss';
 
 const TomMap = (location) => {
-    const {initMap, requestGeolocation} = useMap();
+    const {initMap, requestGeolocation, setCenter } = useMap();
+    let map = useRef(null);
+    ;
 
-    const getGeolocation = (location) => {
+    const getGeolocation = useCallback((location) => {
         // alert(`Getting ${location.location}`);
-        location.location && requestGeolocation(location).then(response => {
-            console.log("results");
-            console.log(response);
+        location.location && requestGeolocation(location)
+            .then(position => {
+                setCenter(map.current, position)
+                console.log("Position");
+                console.log(position);
         });
         console.log(location);
-    }
+    }, [requestGeolocation, map, setCenter]);
 
     useEffect(() => {
-        initMap();
+        map.current = initMap();
+
     }, [initMap]);
 
     useEffect(() => {
