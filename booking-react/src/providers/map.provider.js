@@ -15,12 +15,22 @@ export const MapProvider = ({ children, apiKey }) => {
             container: 'map',
             zoom: 15
         });
-        map.addControl(new tt.NavigationControl());
+        // map.addControl(new tt.NavigationControl());
         return map;
     }
 
     const setCenter = (map, position) => {
         map.setCenter(new tt.LngLat(position.lon, position.lat))
+    }
+
+    const addMarker = (map, position) => {
+        const markerDiv = document.createElement('div');
+        markerDiv.className = "booking-marker";
+        new tt.Marker({
+            element: markerDiv
+        })
+            .setLngLat([position.lon, position.lat])
+            .addTo(map);
     }
 
     const requestGeolocation = (location) => {
@@ -38,7 +48,7 @@ export const MapProvider = ({ children, apiKey }) => {
     }
 
     const mapApi = {
-        initMap, requestGeolocation, setCenter
+        initMap, requestGeolocation, setCenter, addMarker
     }
     return (
         <MapContext.Provider value={mapApi}>

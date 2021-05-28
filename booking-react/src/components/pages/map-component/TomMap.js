@@ -4,7 +4,8 @@ import { useMap } from '../../../providers/map.provider'
 import './tomMap.scss';
 
 const TomMap = (location) => {
-    const {initMap, requestGeolocation, setCenter } = useMap();
+    const {initMap, requestGeolocation, setCenter, addMarker} = useMap();
+
     let map = useRef(null);
     ;
 
@@ -12,12 +13,13 @@ const TomMap = (location) => {
         // alert(`Getting ${location.location}`);
         location.location && requestGeolocation(location)
             .then(position => {
-                setCenter(map.current, position)
+                setCenter(map.current, position);
+                addMarker(map.current, position);
                 console.log("Position");
                 console.log(position);
         });
         console.log(location);
-    }, [requestGeolocation, map, setCenter]);
+    }, [requestGeolocation, map, setCenter, addMarker]);
 
     useEffect(() => {
         map.current = initMap();
