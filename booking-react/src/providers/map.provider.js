@@ -15,7 +15,7 @@ export const MapProvider = ({ children, apiKey }) => {
             container: 'map',
             zoom: 15
         });
-        // map.addControl(new tt.NavigationControl());
+        map.addControl(new tt.NavigationControl());
         return map;
     }
 
@@ -33,6 +33,17 @@ export const MapProvider = ({ children, apiKey }) => {
             .addTo(map);
     }
 
+    const addPopupMessage = (map, message) => {
+        new tt.Popup({
+            className: 'booking-popup',
+            closeButton: true,
+            closeOnClick: false
+        })
+            .setLngLat(new tt.LngLat(0,0))
+            .setHTML(`<p> ${message} </p>`)
+            .addTo(map);
+    }
+
     const requestGeolocation = (location) => {
         const url = `https://api.tomtom.com/search/2/geocode/${location.location}.JSON?key=${apiKey}`;
         return axios.get(url)
@@ -43,12 +54,19 @@ export const MapProvider = ({ children, apiKey }) => {
                     const {position} = results[0]
                     return position;
                 }
-                return Promise.reject('Location not found');
+                return locationNotFoundError();
+            })
+            .catch((error) => {
+                console.log(error);
+                return locationNotFoundError();
             });
+    }
+    const locationNotFoundError = () => {
+        return Promise.reject('Location not found').then();
     }
 
     const mapApi = {
-        initMap, requestGeolocation, setCenter, addMarker
+        initMap, requestGeolocation, setCenter, addMarker, addPopupMessage
     }
     return (
         <MapContext.Provider value={mapApi}>
