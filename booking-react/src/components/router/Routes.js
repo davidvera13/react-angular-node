@@ -9,7 +9,6 @@ import AuthRoutes from "./AuthRoutes";
 import GuestRoutes from "./GuestRoutes";
 
 const Routes = () => {
-    debugger;
     return(
         <div className="container booking-container">
             <Switch>

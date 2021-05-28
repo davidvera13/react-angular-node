@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import tt from "@tomtom-international/web-sdk-maps";
 import axios from "axios";
 
@@ -8,6 +8,28 @@ const MapContext = createContext(null);
 
 // (props)
 export const MapProvider = ({ children, apiKey }) => {
+    const cache = useRef({});
+
+    const normalizeLocation = (location) => {
+        if (location != undefined & location.location != undefined) {
+            console.log(location);
+            return location.location.replace(/\s/g, '').toLowerCase();
+        }
+    }
+    const cacheLocation = (location, position) => {
+        const keyLocation = normalizeLocation(location);
+        return cache.current[keyLocation] = position
+    }
+
+    const getCachedLocation = (location) => {
+        const keyLocation = normalizeLocation(location);
+        return cache.current[keyLocation]
+    }
+    const getGeoPosition = (location) => {
+        const cachedPosition = getCachedLocation(location);
+        return cachedPosition ?
+            Promise.resolve(cachedPosition) : requestGeolocation(location)
+    }
 
     const initMap = () => {
         const map = tt.map({
@@ -45,13 +67,19 @@ export const MapProvider = ({ children, apiKey }) => {
     }
 
     const requestGeolocation = (location) => {
+        // check cache first
+
         const url = `https://api.tomtom.com/search/2/geocode/${location.location}.JSON?key=${apiKey}`;
         return axios.get(url)
             .then(res => res.data)
             .then(tomRes => {
                 const results = tomRes.results;
+
                 if (results && results.length > 0) {
                     const {position} = results[0]
+                    // store result into cache - memory variable
+                    // { 'address here' : { lat: 0, lon: 12) } }
+                    cacheLocation(location.location, position)
                     return position;
                 }
                 return locationNotFoundError();
@@ -66,7 +94,7 @@ export const MapProvider = ({ children, apiKey }) => {
     }
 
     const mapApi = {
-        initMap, requestGeolocation, setCenter, addMarker, addPopupMessage
+        initMap, getGeoPosition, setCenter, addMarker, addPopupMessage
     }
     return (
         <MapContext.Provider value={mapApi}>
