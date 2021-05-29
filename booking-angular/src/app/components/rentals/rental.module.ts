@@ -13,6 +13,7 @@ import {NgCustomForDirective} from '../../directives/ng-custom-for.directive';
 import {HttpClientModule} from "@angular/common/http";
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import {AuthGuard} from "../../guards/auth.guard";
+import {MapModule} from "../map/map.module";
 
 const routes: Routes = [
   {
@@ -38,10 +39,11 @@ const routes: Routes = [
     NgCustomForDirective,
     LandingPageComponent
   ],
-  imports: [
-    RouterModule.forChild(routes),
-    CommonModule,
-    HttpClientModule
-  ]
+    imports: [
+        RouterModule.forChild(routes),
+        CommonModule,
+        HttpClientModule,
+        MapModule
+    ]
 })
 export class RentalModule { }

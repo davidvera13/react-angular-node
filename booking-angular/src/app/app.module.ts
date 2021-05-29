@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { RentalModule } from './components/rentals/rental.module';
 import {AuthModule} from "./components/auth/auth.module";
+import {MapModule} from "./components/map/map.module";
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {AuthModule} from "./components/auth/auth.module";
     BrowserModule,
     AppRoutingModule,
     RentalModule,
-    AuthModule
+    AuthModule,
+    MapModule
 
   ],
   providers: [],

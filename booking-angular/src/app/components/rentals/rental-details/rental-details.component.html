@@ -8,10 +8,12 @@
         >
       </div>
       <div class="col-md-6">
-        <img
-          [src]="rental.image"
-          [alt]="rental.description"
-        >
+        <!--
+          we are passing to the child component data that will be stored in
+          location member variable in TomtomComponent
+        -->
+        <app-tomtom
+          [location] = "rentalLocation"></app-tomtom>
       </div>
     </div>
   </div>

@@ -12,6 +12,8 @@ export class RentalDetailsComponent implements OnInit {
 
   // @ts-ignore
   rental: RentalModel;
+  // location: string;
+
   constructor(private route: ActivatedRoute,
               private rentalService: RentalService) { }
 
@@ -22,6 +24,11 @@ export class RentalDetailsComponent implements OnInit {
           this.rental = rental;
         });
     });
+  }
+
+  get rentalLocation(): string {
+    return `${ this.rental.city }, ${ this.rental.street }`
+
   }
 
 }
