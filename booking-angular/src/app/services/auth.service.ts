@@ -63,7 +63,7 @@ export class AuthService {
 
   private saveToken(token): string | null {
     const decodedToken = this.jwtHelperService.decodeToken(token)
-    console.log(decodedToken)
+    // console.log(decodedToken)
     if(!decodedToken) {
       return null;
     }
@@ -75,20 +75,19 @@ export class AuthService {
 
   get isAuthenticated(): boolean {
     const isAuth = moment().isBefore(this.expiration);
-    console.log(isAuth)
-    return isAuth;
+    // console.log(isAuth)
     return isAuth;
   }
 
   get username(): string {
     const username = this.decodedToken.username;
-    console.log(username)
+    // console.log(username)
     return username;
   }
 
   private get expiration() {
     const exp = moment.unix(this.decodedToken.exp);
-    console.log(exp)
+    // console.log(exp)
     return exp;
   }
 }

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import * as tt from '@tomtom-international/web-sdk-maps';
 import {environment} from "../../../../environments/environment";
+import {MapService} from "../../../services/map.service";
 
 @Component({
   selector: 'app-tomtom',
@@ -11,9 +12,10 @@ import {environment} from "../../../../environments/environment";
 export class TomtomComponent implements OnInit {
   @Input() set location(location: string)  {
     this.generateMap();
+    this.getGeolocation(location);
   };
 
-  constructor() {
+  constructor(private mapService: MapService) {
   }
 
   ngOnInit(): void {
@@ -27,4 +29,11 @@ export class TomtomComponent implements OnInit {
     map.addControl(new tt.NavigationControl());
   }
 
+  private getGeolocation(location: string): void {
+    this.mapService.requestLocation(location)
+      .subscribe(res => {
+        console.log('tt response');
+        console.log(res);
+      });
+  }
 }
