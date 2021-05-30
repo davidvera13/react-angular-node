@@ -38,6 +38,14 @@ export class TomtomComponent implements OnInit {
       .subscribe((position: GeoPositionResponse) => {
         console.log("position ", position);
         this.map.setCenter(new tt.LngLat(position.lon, position.lat));
+        // new tt.Marker().setLngLat([position.lon, position.lat]).addTo(this.map);
+        var markerDiv = document.createElement('div');
+        markerDiv.className = 'booking-marker';
+        new tt.Marker({
+          element: markerDiv
+        })
+          .setLngLat([position.lon, position.lat])
+          .addTo(this.map);
       });
   }
 }
