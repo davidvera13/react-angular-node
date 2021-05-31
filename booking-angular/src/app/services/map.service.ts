@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
+import {Observable, throwError} from "rxjs";
+import {catchError, map} from "rxjs/operators";
 import {GeoPositionResponse} from "../shared/geoPositionResponse.model";
 import {MapResponseModel} from "../shared/mapResponse.model";
 
@@ -25,6 +25,6 @@ export class MapService {
         } else {
           throw new Error('Location not found');
         }
-      }));
+      }), catchError(_ => throwError(new Error('Error, api call failed'))));
   }
 }

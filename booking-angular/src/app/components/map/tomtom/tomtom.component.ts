@@ -15,6 +15,8 @@ export class TomtomComponent implements OnInit {
   private map: any;
   @Input() set location(location: string)  {
     this.generateMap();
+    // we want to throw exception
+    // this.getGeolocation("locationDoesntExist");
     this.getGeolocation(location);
   };
 
@@ -39,12 +41,20 @@ export class TomtomComponent implements OnInit {
         console.log("position ", position);
         this.map.setCenter(new tt.LngLat(position.lon, position.lat));
         // new tt.Marker().setLngLat([position.lon, position.lat]).addTo(this.map);
-        var markerDiv = document.createElement('div');
+        const markerDiv = document.createElement('div');
         markerDiv.className = 'booking-marker';
         new tt.Marker({
           element: markerDiv
         })
           .setLngLat([position.lon, position.lat])
+          .addTo(this.map);
+      }, (error: Error) => {
+        // print error message with stack trace
+        console.log(error.message);
+        var popup = new tt.Popup(
+          { className: 'booking-mappopup', closeButton: false, closeOnClick: false})
+          .setLngLat(new tt.LngLat(0, 0))
+          .setHTML(`<p>${error.message}</p>`)
           .addTo(this.map);
       });
   }

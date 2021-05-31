@@ -48,7 +48,6 @@ export class AuthService {
     this.decodedToken = new DecodedToken();
   }
   checkAuthentication(): boolean {
-    debugger;
     const authToken = localStorage.getItem('token');
     if(!authToken) {
       return false;

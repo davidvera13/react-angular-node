@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-md-6">
         <img
-          src="{{rental.image}}"
-          alt="{{rental.description}}"
+          src="{{rental?.image}}"
+          alt="{{rental?.description}}"
           class="img-fluid"
         >
       </div>
@@ -23,33 +23,33 @@
     <div class="row">
       <div class="col-md-8">
         <div class="rental">
-          <h2 class="rental-type type-{{rental.category}}">
-            {{ (rental.shared ? "Shared" : "Whole")  | upper}}
-            {{ rental.category | upper }}
+          <h2 class="rental-type type-{{rental?.category}}">
+            {{ (rental?.shared ? "Shared" : "Whole")  | upper}}
+            {{ rental?.category | upper }}
           </h2>
           <h1 [appHighlight]="'ivory'" class="rental-title">
-            {{ rental.title }}
+            {{ rental?.title }}
           </h1>
           <h2 class="rental-city">
           <!-- same as using second pipe            -->
-            {{ rental.city | upper:'firstUpperLetter' }}
+            {{ rental?.city | upper:'firstUpperLetter' }}
           </h2>
           <div class="rental-room-info">
             <span>
               <i class="fa fa-building"></i>
-              {{ rental.numOfRooms }} bedrooms
+              {{ rental?.numOfRooms }} bedrooms
             </span>
             <span>
               <i class="fa fa-user"></i>
-              {{ rental.numOfRooms + 4 }} guests
+              {{ rental?.numOfRooms + 4 }} guests
             </span>
             <span>
               <i class="fa fa-bed"></i>
-              {{ rental.numOfRooms + 2 }} beds
+              {{ rental?.numOfRooms + 2 }} beds
             </span>
           </div>
           <p class="rental-description">
-            {{rental.description}}
+            {{rental?.description}}
           </p>
           <hr>
           <div class="rental-assets" [appHighlight]="'lightyellow'">

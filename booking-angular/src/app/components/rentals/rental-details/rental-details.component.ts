@@ -27,7 +27,7 @@ export class RentalDetailsComponent implements OnInit {
   }
 
   get rentalLocation(): string {
-    return `${ this.rental.city }, ${ this.rental.street }`
+    return `${ this.rental?.city }, ${ this.rental?.street }`
 
   }
 
