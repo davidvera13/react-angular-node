@@ -31,15 +31,21 @@ const Header = ({ username, isAuth, logout }) => {
                     { isAuth &&
                         <>
                             <li className="nav-item dropdown">
-                                <Link className="nav-link dropdown-toggle" to="/" id="navbarDropdown" role="button"
-                                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a className="nav-link dropdown-toggle"
+                                   id="navbarDropdown"
+                                   href="#"
+                                   role="button"
+                                   data-toggle="dropdown"
+                                   aria-haspopup="true"
+                                   aria-expanded="false">
                                     Manage
-                                </Link>
+                                </a>
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <Link className="dropdown-item" to="/">Action</Link>
-                                    <Link className="dropdown-item" to="/">Another action</Link>
-                                    <div className="dropdown-divider">&nbsp;</div>
-                                    <Link className="dropdown-item" to="/">Something else here</Link>
+                                    <Link
+                                        className="dropdown-item"
+                                        to="/rentals/new">
+                                        New Rental
+                                    </Link>
                                 </div>
                             </li>
                             <li className="nav-item">
@@ -60,8 +66,6 @@ const Header = ({ username, isAuth, logout }) => {
                             </li>
                         </React.Fragment>
                     }
-
-
                 </ul>
 
             </div>

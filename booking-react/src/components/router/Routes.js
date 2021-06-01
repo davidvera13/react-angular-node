@@ -7,6 +7,7 @@ import RentalDetails from "../pages/rentaldetails-component/RentalDetails";
 import SecretPage from "../pages/secretPage";
 import AuthRoutes from "./AuthRoutes";
 import GuestRoutes from "./GuestRoutes";
+import RentalNew from "../pages/rentalnew-component/rentalNew";
 
 const Routes = () => {
     return(
@@ -15,6 +16,9 @@ const Routes = () => {
                 <Route exact path= '/'>
                     <RentalHome />
                 </Route>
+                <AuthRoutes path="/rentals/new">
+                    <RentalNew />
+                </AuthRoutes>
                 <Route path = '/rentals/:id'>
                     <RentalDetails />
                 </Route>
