@@ -15,7 +15,7 @@ export class TomtomComponent implements OnInit {
     this.generateMap();
     // we want to throw exception
     // this.getGeolocation("locationDoesntExist");
-    this.getGeolocation(location);
+    this.getGeoPosition(location);
   };
 
   constructor(private mapService: MapService) {
@@ -29,8 +29,8 @@ export class TomtomComponent implements OnInit {
     this.map.addControl(new tt.NavigationControl());
   }
 
-  private getGeolocation(location: string): void {
-    this.mapService.requestLocation(location)
+  private getGeoPosition(location: string): void {
+    this.mapService.getGeoPosition(location)
       .subscribe((position: GeoPositionResponse) => {
         console.log("position ", position);
         this.mapService.initMap(this.map, position);
