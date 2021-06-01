@@ -72,7 +72,7 @@ exports.register = (req, res) => {
                 return res.mongoError(error);
             }
             return res.json({status: 'registered'});
-        });
+        }).then();
     });
 
 };
@@ -81,7 +81,7 @@ exports.secret = (req, res) => {
     return res.json({message: 'Custom message for authorized users'})
 }
 
-// authenticated middleware
+// authenticated middleware (only auth user)
 exports.isUserAuthenticatedMiddleware = (req, res, next) => {
     const token = req.headers.authorization;
     if (token) {

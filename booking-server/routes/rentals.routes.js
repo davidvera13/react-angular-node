@@ -9,13 +9,12 @@ const {
     // deleteRental
 } = require('../controllers/rentals.controller');
 
+const { isUserAuthenticatedMiddleware } = require('../controllers/users.controller');
 
 // requests
 router.get('/', getRentals);
-
 router.get('/:rentalId',getRental);
-
-router.post('/', createRental);
+router.post('/', isUserAuthenticatedMiddleware, createRental);
 
 // router.delete('/:rentalId', deleteRental);
 //

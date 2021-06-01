@@ -11,7 +11,7 @@ export const MapProvider = ({ children, apiKey }) => {
     const cache = useRef({});
 
     const normalizeLocation = (location) => {
-        if (location != undefined & location.location != undefined) {
+        if (location !== undefined && location.location !== undefined) {
             console.log(location);
             return location.location.replace(/\s/g, '').toLowerCase();
         }

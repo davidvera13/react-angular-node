@@ -39,10 +39,13 @@ const rentalSchema = new Schema({
 
     },
     shared: Boolean,
+    // FK reference to User schema
+    owner: { type: Schema.Types.ObjectId, ref: 'User' },
     createdAt: {
         type: Date,
         default: Date.now
     },
+
 })
 
 // handling exceptions

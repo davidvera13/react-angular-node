@@ -30,13 +30,17 @@ exports.getRental = (req, res) => {
 exports.createRental = (req, res) => {
     // we expect a payload
     const payload = req.body;
+    // get the owner user
+    const user = res.locals.user;
+    payload.owner = user;
 
     // using model
     Rental.create(payload, (error, storedRental) => {
         if (error) {
             return res.mongoError(error);
         } else {
-            return res.json({ message: `rental with id ${storedRental._id} was added`});
+            // return res.json({message: `rental with id ${storedRental._id} was added`});
+            return res.json(storedRental);
         }
     });
 }
