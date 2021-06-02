@@ -1,11 +1,17 @@
 import React from 'react';
+import { useForm } from "react-hook-form";
 
-const RentalForm = () => {
+const RentalForm = ({onSubmit}) => {
+    const { register, handleSubmit} = useForm();
+    const rentalOptions = ['Condo', 'Appartment', 'House']
+
     return (
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
                 <label htmlFor="title">Title</label>
                 <input
+                    {...register("title")}
+                    name="title"
                     type="text"
                     className="form-control"
                     id="title"/>
@@ -14,6 +20,8 @@ const RentalForm = () => {
             <div className="form-group">
                 <label htmlFor="city">City</label>
                 <input
+                    {...register("city")}
+                    name="city"
                     type="text"
                     className="form-control"
                     id="city"/>
@@ -22,6 +30,8 @@ const RentalForm = () => {
             <div className="form-group">
                 <label htmlFor="street">Street</label>
                 <input
+                    {...register("street")}
+                    name="street"
                     type="text"
                     className="form-control"
                     id="street"/>
@@ -29,17 +39,26 @@ const RentalForm = () => {
 
             <div className="form-group">
                 <label htmlFor="category">Category</label>
+                <select
+                    {...register("category")}
+                    name="category"
+                    className="form-control"
+                    id="category"
+                >
+                    {
+                        rentalOptions.map(option =>
+                            <option key={option}> {option} </option>
+                        )
+                    }
 
-                <select className="form-control"
-                        id="category">
-                    <option> Something 1 </option>
-                    <option> Something 2 </option>
                 </select>
             </div>
 
             <div className="form-group">
                 <label htmlFor="bedrooms">Image Url</label>
                 <input
+                    {...register("image")}
+                    name="image"
                     type="text"
                     className="form-control"
                     id="image"/>
@@ -48,6 +67,8 @@ const RentalForm = () => {
             <div className="form-group">
                 <label htmlFor="bedrooms">Rooms</label>
                 <input
+                    {...register("numOfRooms")}
+                    name="numOfRooms"
                     type="number"
                     className="form-control"
                     id="numOfRooms"/>
@@ -56,6 +77,8 @@ const RentalForm = () => {
             <div className="form-group">
                 <label htmlFor="description">Description</label>
                 <textarea
+                    {...register("description")}
+                    name="description"
                     rows="5"
                     type="text"
                     className="form-control"
@@ -70,6 +93,8 @@ const RentalForm = () => {
                         <div className="input-group-text">$</div>
                     </div>
                     <input
+                        {...register("dailyPrice")}
+                        name="dailyPrice"
                         type="number"
                         className="form-control"
                         id="dailyPrice"/>
@@ -77,16 +102,10 @@ const RentalForm = () => {
             </div>
 
             <div className="form-group">
-                <label htmlFor="phone">Phone</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="phone"/>
-            </div>
-
-            <div className="form-group">
                 <label htmlFor="shared">Shared</label>
                 <input
+                    {...register("shared")}
+                    name="shared"
                     type="checkbox"
                     className="form-control"
                     id="shared"/>

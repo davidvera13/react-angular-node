@@ -1,5 +1,7 @@
-// import { rentalsData } from '../data'
 import axios from 'axios';
+import axiosService from '../../services/AxiosService';
+const { bookingAxios } = axiosService;
+
 
 export const extractApiErrors = (resError) => {
     let errors = [{title: 'Error!', detail: 'Oooops, something went wrong! '}];
@@ -28,10 +30,8 @@ export const fetchRentalById = (rentalId) => async dispatch => {
 }
 
 export const createRental = rental => {
-    return {
-        type: 'CREATE_RENTAL',
-        rental
-    }
+    debugger;
+    return bookingAxios.post('/rentals', rental)
 }
 
 // Auth action
