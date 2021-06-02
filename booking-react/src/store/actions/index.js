@@ -11,53 +11,7 @@ export const extractApiErrors = (resError) => {
     return errors;
 }
 
-// we define the type and associate payload
-export const fetchRentals = () => async dispatch  => {
-    const res = await axios.get('/api/v1/rentals')
-    dispatch({
-        type: 'FETCH_RENTALS',
-        rentals: res.data
-    })
-}
-
-export const fetchRentalById = (rentalId) => async dispatch => {
-    dispatch({type: 'IS_FETCHING_RENTAL'});
-    const res = await axios.get(`/api/v1/rentals/${rentalId}`)
-     dispatch({
-         type: 'FETCH_RENTAL_BY_ID',
-         rental: res.data
-     });
-}
-
-export const createRental = rental => {
-    debugger;
-    return bookingAxios.post('/rentals', rental)
-}
-
-// Auth action
-// register user: we don't store any state in redux
-export const registerUser = (registrationData) => {
-    return axios
-        .post('/api/v1/users/register', registrationData)
-        .catch(error => {
-            return Promise.reject(extractApiErrors(error.response || {}));
-        });
-}
+export * from './auth.action';
+export * from './rentals.action';
 
 
-export const loginUser = (loginData) => {
-    return axios
-        .post('/api/v1/users/login', loginData)
-        .then(res => res.data)
-        .catch(error => {
-            debugger;
-            return Promise.reject(extractApiErrors(error.response || {}));
-        });
-}
-
-export const userAuthenticated = (decodedToken) => {
-    return {
-        type: 'USER_AUTHENTICATED',
-        username: decodedToken.username
-    };
-}
