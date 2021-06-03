@@ -3,6 +3,7 @@ import {RegisterForm} from "../../../shared/registerForm.model";
 import {NgForm} from "@angular/forms";
 import {AuthService} from "../../../services/auth.service";
 import {Router} from "@angular/router";
+import {validateInputs} from "../../../validators/functions";
 
 @Component({
   selector: 'app-register',
@@ -24,11 +25,13 @@ export class RegisterComponent implements OnInit {
   }
 
   register(form: NgForm): void {
-    this.errors = null;
+    validateInputs(form);
+    // this.errors = null;
     // alert(JSON.stringify(this.registerFormData));
     if (form.invalid) {
       return;
     }
+    this.errors = [];
     // the response is not used: just for printing purpose
     this.authService
       .register(this.registerFormData)
@@ -43,11 +46,7 @@ export class RegisterComponent implements OnInit {
         this.errors = errors;
       });
   }
-  validateInputs(form: NgForm): void {
-    Object.keys(form.controls).forEach(controlName => {
-      form.controls[controlName].markAsDirty();
-    });
-  }
+
 
   diagnostic(): string {
     return JSON.stringify(this.registerFormData)

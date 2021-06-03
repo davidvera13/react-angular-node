@@ -18,4 +18,10 @@ export class RentalService {
     // http://localhost:4200/api/v1/rentals/${rentalId}
     return this.http.get<RentalModel>(`/api/v1/rentals/${rentalId}`);
   }
+
+  createRental(createdRental: RentalModel): Observable<RentalModel> {
+    alert(JSON.stringify(createdRental))
+    return null;
+
+  }
 }

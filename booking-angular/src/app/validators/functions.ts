@@ -2,7 +2,7 @@ import {
   AbstractControl,
   FormGroup,
   ValidatorFn,
-  ValidationErrors
+  ValidationErrors, NgForm
 } from "@angular/forms";
 
 
@@ -21,5 +21,11 @@ export function sameAsValidator(controls: string[]): ValidatorFn  {
     return compare.value !== compareTo.value ?
         {sameAs: {value: control.value}} : null;
   }
+}
+
+export function validateInputs(form: NgForm): void {
+  Object.keys(form.controls).forEach(controlName => {
+    form.controls[controlName].markAsDirty();
+  });
 }
 

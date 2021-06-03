@@ -1,4 +1,6 @@
-export interface RentalModel {
+export class RentalModel {
+  static readonly CATEGORIES = ['apartment', 'house', 'condo'];
+
   _id: string;
   title: string;
   city: string;

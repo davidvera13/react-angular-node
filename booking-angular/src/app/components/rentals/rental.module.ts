@@ -14,6 +14,8 @@ import {HttpClientModule} from "@angular/common/http";
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import {AuthGuard} from "../../guards/auth.guard";
 import {MapModule} from "../map/map.module";
+import { RentalsNewComponent } from './rentals-new/rentals-new.component';
+import {FormsModule} from "@angular/forms";
 
 const routes: Routes = [
   {
@@ -21,6 +23,7 @@ const routes: Routes = [
     component: RentalsComponent,
     children: [
       { path: '', component: RentalsListingComponent},
+      { path: 'new', component: RentalsNewComponent, canActivate: [AuthGuard]},
       { path: 'secret', component: LandingPageComponent, canActivate: [AuthGuard]},
       { path: ':rentalId', component: RentalDetailsComponent}
     ]},
@@ -37,13 +40,15 @@ const routes: Routes = [
     HighlightDirective,
     NgCustomIfDirective,
     NgCustomForDirective,
-    LandingPageComponent
+    LandingPageComponent,
+    RentalsNewComponent
   ],
-    imports: [
-        RouterModule.forChild(routes),
-        CommonModule,
-        HttpClientModule,
-        MapModule
-    ]
+  imports: [
+    RouterModule.forChild(routes),
+    CommonModule,
+    HttpClientModule,
+    MapModule,
+    FormsModule
+  ]
 })
 export class RentalModule { }
