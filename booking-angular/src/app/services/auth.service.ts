@@ -72,6 +72,9 @@ export class AuthService {
     return token;
   }
 
+  get authToken(): string {
+    return localStorage.getItem("token") || '';
+  }
   get isAuthenticated(): boolean {
     const isAuth = moment().isBefore(this.expiration);
     // console.log(isAuth)

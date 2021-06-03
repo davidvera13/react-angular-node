@@ -3,6 +3,7 @@ import {RentalModel} from "../../../shared/rental.model";
 import {NgForm} from "@angular/forms";
 import {RentalService} from "../../../services/rental.service";
 import {validateInputs} from "../../../validators/functions";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-rentals-new',
@@ -12,8 +13,10 @@ import {validateInputs} from "../../../validators/functions";
 export class RentalsNewComponent implements OnInit {
   rentalCategories = RentalModel.CATEGORIES;
   createdRental: RentalModel;
+  errors: BookingApp.ApiError[] = [];
 
-  constructor(private rentalService: RentalService) { }
+  constructor(private rentalService: RentalService,
+              private router:  Router) { }
 
   ngOnInit(): void {
     this.createdRental = new RentalModel();
@@ -23,9 +26,16 @@ export class RentalsNewComponent implements OnInit {
 
   createRental(form: NgForm) {
     validateInputs(form);
-    if(form.invalid) {
-      return;
-    }
-    this.rentalService.createRental(this.createdRental);
+    debugger;
+    // if(form.invalid) {
+    //   return;
+    // }
+    this.errors = [];
+    this.rentalService
+      .createRental(this.createdRental)
+      .subscribe((res: RentalModel) => {
+        console.log(res)
+        this.router.navigate(['/rentals'])
+      }, errors => this.errors = errors);
   }
 }
