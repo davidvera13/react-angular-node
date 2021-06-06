@@ -7,6 +7,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { RentalModule } from './components/rentals/rental.module';
 import {AuthModule} from "./components/auth/auth.module";
 import {MapModule} from "./components/map/map.module";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {TokenInterceptor} from "./interceptors/token.interceptor";
 
 
 @NgModule({
@@ -17,12 +19,18 @@ import {MapModule} from "./components/map/map.module";
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     RentalModule,
     AuthModule,
     MapModule
-
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass :TokenInterceptor,
+      multi: true
+    }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
 import {RentalModel} from '../shared/rental.model';
 import {Observable, throwError} from 'rxjs';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {catchError, map} from "rxjs/operators";
 import {extractApiErrors} from "../shared/helper/function";
-import {AuthService} from "./auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RentalService {
 
-  constructor(private http: HttpClient,
-              private authService: AuthService) { }
+  constructor(private http: HttpClient) { }
 
   public getRentals(): Observable<RentalModel[]> {
     return this.http.get<RentalModel[]>(`/api/v1/rentals/`);
@@ -25,14 +23,9 @@ export class RentalService {
 
   createRental(createdRental: RentalModel): Observable<RentalModel> {
     // alert(JSON.stringify(createdRental))
-    debugger;
-    const httpOptions = {
-      headers: new HttpHeaders({
-        "Authorization": "Bearer " + this.authService.authToken
-      })
-    }
+
     return this.http
-      .post<RentalModel>('/api/v1/rentals', createdRental, httpOptions)
+      .post<RentalModel>('/api/v1/rentals', createdRental)
       .pipe(
         catchError((err: HttpErrorResponse) => {
           console.log(err)
