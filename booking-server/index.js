@@ -12,10 +12,13 @@ require('dotenv').config();
 // routes
 const rentalRoutes = require('./routes/rentals.routes');
 const usersRoutes = require('./routes/users.routes');
+const bookingsRoutes = require('./routes/booking.routes');
 
 // models
 const Rental = require('./models/rental.model');
 const User = require('./models/user.model');
+const Booking = require('./models/booking.model');
+
 
 const app  = express();
 const PORT = process.env.PORT || 3001;
@@ -41,3 +44,4 @@ app.use(provideErrorHandler);
 
 app.use('/api/v1/rentals', rentalRoutes);
 app.use('/api/v1/users', usersRoutes);
+app.use('/api/v1/bookings', bookingsRoutes);
