@@ -2,5 +2,6 @@ const Booking = require('../models/booking.model')
 
 
 exports.createBooking = (req, res) => {
-    return res.json('Booking created')
+    const bookingData = req.body;
+    return res.json({message: 'Booking is created!'});
 };

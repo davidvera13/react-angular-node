@@ -1,5 +1,6 @@
 const express = require('express')
 const {isUserAuthenticatedMiddleware} = require("../controllers/users.controller");
+const {isUserRentalOwnerMiddleware} = require("../controllers/rentals.controller")
 const router = express.Router();
 
 const {
@@ -8,7 +9,7 @@ const {
 
 
 // requests
-router.post('', isUserAuthenticatedMiddleware, createBooking);
+router.post('', isUserAuthenticatedMiddleware, isUserRentalOwnerMiddleware, createBooking);
 
 
 // export the router and make it available to index.js

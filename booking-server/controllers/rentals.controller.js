@@ -65,3 +65,27 @@ exports.createRental = (req, res) => {
 //     return res.json({ message: `rental with id ${rentalId} was removed`});
 //
 // }
+
+
+// middlewares
+exports.isUserRentalOwnerMiddleware = (req, res, next) => {
+    const {rental} = req.body;
+    const user = res.locals.user;
+
+    Rental.findById(rental)
+        .populate('owner')
+        .exec((error, storedRental) => {
+            if (error) {
+                return res.mongoError(error);
+            }
+            if(storedRental.owner.id === user.id) {
+                return res.apiError({
+                    title: "Invalid user",
+                    details: 'Cannot create booking on your rental'
+                })
+            }
+            next();
+
+        });
+}
+
