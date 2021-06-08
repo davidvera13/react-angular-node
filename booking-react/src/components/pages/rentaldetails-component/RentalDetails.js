@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { fetchRentalById } from "store/actions";
 import RentalInfo from "./RentalInfo";
 import TomMap from "../map-component/TomMap"
+import BookingReserve from "../booking/BookingReserve";
 
 // eslint-disable-next-line
 function RentalDetailInfo() {
@@ -52,7 +53,10 @@ class RentalDetails extends React.Component {
                             <RentalInfo rental={ rental } />
 
                         </div>
-                        <div className="col-md-4"> BOOKING</div>
+                        <div className="col-md-4">
+                            BOOKING
+                            <BookingReserve></BookingReserve>
+                        </div>
                     </div>
                 </div>
             </section>
