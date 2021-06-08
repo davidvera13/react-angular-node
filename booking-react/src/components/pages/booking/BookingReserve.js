@@ -1,12 +1,17 @@
 import React from "react";
 import DateRangePicker from "react-bootstrap-daterangepicker";
+import moment from "moment";
 
 class BookingReserve extends React.Component{
     constructor() {
         super();
+
+        // this.dateRef = React.createRef();
         this.state = {
             proposedBooking: {
-                guests: ''
+                guests: '',
+                startAt: null,
+                endAt: null
             }
         };
     }
@@ -20,20 +25,52 @@ class BookingReserve extends React.Component{
         })
     }
 
+    // (event, picker)
+    handleApply = (_, {startDate, endDate}) => {
+        // console.log(moment(startDate).format('YYYY/MM/DD') + ' to ' + moment(endDate).format('YYYY/MM/DD'));
+        // this.dateRef.current.value = moment(startDate).format('YYYY/MM/DD') + ' to ' + moment(endDate).format('YYYY/MM/DD');
+
+        this.setState({
+            proposedBooking: {
+                ...this.state.proposedBooking,
+                startAt: startDate,
+                endAt: endDate
+            }
+        })
+        debugger;
+    }
+    checkInvalidDates = (date) => {
+        // if date is invalid return true
+        return date < moment().add(-1, 'days');
+    }
     makeBooking = () => {
-        alert(JSON.stringify(this.state.proposedBooking))
+
+        alert(JSON.stringify(this.state))
     }
     render() {
+        const { rental } = this.props;
         return (
             <div className='booking'>
-                <h3 className='booking-price'>$ 12 <span className='booking-per-night'>per night</span></h3>
+                <h3 className='booking-price'>
+                    $ { rental.dailyPrice }
+                    <span className='booking-per-night'>
+                        per night
+                    </span>
+                </h3>
                 <hr></hr>
                 <div className='form-group'>
                     <label htmlFor='dates'>Dates</label>
                     <DateRangePicker
-                        opens="left"
-                        containerStyles={{ display: 'block'}}>
+                        initialSettings={{
+                            opens:"left",
+                            containerStyles:{ display: 'block'},
+                            isInvalidDate: this.checkInvalidDates
+
+                        }}
+                        onApply={this.handleApply}
+                    >
                         <input
+                            // ref={this.dateRef}
                             id="dates"
                             type='text'
                             className='form-control'

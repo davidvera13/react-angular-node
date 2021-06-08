@@ -30,7 +30,7 @@ class RentalDetails extends React.Component {
 
     render() {
         const { rental, isFetching } = this.props;
-        if (isFetching) {
+        if (isFetching || !rental._id) {
             // we can add loader
             return null;
         }
@@ -51,11 +51,10 @@ class RentalDetails extends React.Component {
                     <div className="row">
                         <div className="col-md-8">
                             <RentalInfo rental={ rental } />
-
                         </div>
                         <div className="col-md-4">
                             BOOKING
-                            <BookingReserve></BookingReserve>
+                            <BookingReserve rental={rental} />
                         </div>
                     </div>
                 </div>
