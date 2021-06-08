@@ -3,6 +3,7 @@ import ReactDOM from '../node_modules/react-dom';
 
 import '../node_modules/bootstrap/dist/js/bootstrap.min.js';
 import './index.scss';
+import 'bootstrap-daterangepicker/daterangepicker.css';
 
 import App from './components/App'
 import reportWebVitals from './reportWebVitals';
