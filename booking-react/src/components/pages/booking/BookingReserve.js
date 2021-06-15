@@ -1,10 +1,11 @@
 import React from "react";
 import DateRangePicker from "react-bootstrap-daterangepicker";
-import moment from "moment";
+import Moment from 'moment';
+import { extendMoment } from 'moment-range';
 import BookingModal from "../../shared/model-component/BookingModal";
+const moment = extendMoment(Moment);
 
 // //    "react-bootstrap-daterangepicker": "^7.0.0",
-
 class BookingReserve extends React.Component{
     constructor() {
         super(undefined);
@@ -31,7 +32,6 @@ class BookingReserve extends React.Component{
     // (event, picker)
     handleApply = (_, {startDate, endDate}) => {
         // console.log(moment(startDate).format('YYYY/MM/DD') + ' to ' + moment(endDate).format('YYYY/MM/DD'));
-        debugger;
         this.dateRef.current.value = moment(startDate).format('YYYY/MM/DD') + ' to ' + moment(endDate).format('YYYY/MM/DD');
         console.log(this.dateRef.current.value)
 
@@ -47,8 +47,39 @@ class BookingReserve extends React.Component{
         // if date is invalid return true
         return date < moment().add(-1, 'days');
     }
+
+    onProcessData = () => {
+        // alert("Alert calling !")
+        this.setState({
+            proposedBooking: {
+                ...this.state.proposedBooking,
+                nights: this.nights,
+                totalPrice: this.totalPrice
+            }
+        })
+    }
+
+    get nights() {
+        const { startAt, endAt } = this.state.proposedBooking;
+        if(!startAt || !endAt) {
+            return null;
+        }
+        const range = moment.range(startAt, endAt)
+        // const nights = Array.from(range.by('days') )
+        return Array.from(range.by('days')).length - 1;
+    }
+
+    get totalPrice() {
+        const { rental: { dailyPrice }} = this.props;
+        return dailyPrice && this.nights * dailyPrice;
+    }
+
+    get isBookingValid () {
+        const { startAt, endAt, guests } = this.state.proposedBooking
+        return startAt && endAt && guests;
+    }
+
     makeBooking = () => {
-        debugger;
         alert(JSON.stringify(this.state))
     }
 
@@ -59,7 +90,8 @@ class BookingReserve extends React.Component{
 
     render() {
         const { rental } = this.props;
-        const { proposedBooking } = this.state;
+        const { proposedBooking: { nights, guests, totalPrice}} = this.state;
+
         return (
             <div className='booking'>
                 <h3 className='booking-price'>
@@ -88,7 +120,7 @@ class BookingReserve extends React.Component{
                     <label htmlFor='guests'>Guests</label>
                     <input
                         onChange={this.handleGuestsChange}
-                        value={proposedBooking.guests}
+                        value={guests}
                         type='number'
                         className='form-control'
                         id='guests'
@@ -108,14 +140,16 @@ class BookingReserve extends React.Component{
                     subtitle={"Date : " + this.formattedDate() }
                     openBtn={
                         <button
+                            onClick={this.onProcessData}
+                            disabled={!this.isBookingValid}
                             className='btn btn-bwm-main btn-block'>Reserve place now
                         </button>
                     }
                 >
                     {/*<p className='modal-subtitle'>Date : {this.formattedDate()}</p>*/}
-                    <em>12 </em>Nights / <em>$ {rental.dailyPrice}</em> per night
-                    <p>Guests : { proposedBooking.guests }</p>
-                    <p>Price : <em>$ 200</em></p>
+                    <em>{nights} </em>Nights / <em>$ {rental.dailyPrice}</em> per night
+                    <p>Guests : { guests }</p>
+                    <p>Price : <em>$ { totalPrice }</em></p>
                     <p>Do you confirm your booking ?</p>
                 </BookingModal>
 
