@@ -9,5 +9,9 @@ export const createBooking = (booking)  => {
         .catch(err => Promise.reject(extractApiErrors(err.response || {})))
 }
 
-
+// get the bookings for a rental
+export const getBookings = (rentalId) => {
+    return bookingAxios.get(`/rentals/${rentalId}/bookings`)
+        .then(res => res.data)
+}
 

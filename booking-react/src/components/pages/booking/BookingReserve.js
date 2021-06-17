@@ -3,7 +3,7 @@ import DateRangePicker from "react-bootstrap-daterangepicker";
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
 import BookingModal from "../../shared/model-component/BookingModal";
-import { createBooking } from "../../../store/actions";
+import { createBooking, getBookings } from "../../../store/actions";
 
 const moment = extendMoment(Moment);
 
@@ -11,7 +11,7 @@ const moment = extendMoment(Moment);
 class BookingReserve extends React.Component{
     constructor() {
         super(undefined);
-
+        this.bookedOutDates = [];
         this.dateRef = React.createRef();
         this.state = {
             proposedBooking: {
@@ -20,6 +20,12 @@ class BookingReserve extends React.Component{
                 endAt: null
             }
         };
+    }
+    async componentDidMount() {
+        const { rental } = this.props;
+        // const bookings = await getBookings(rental._id);
+        // this.bookedOutDates.push(...bookings);
+        this.bookedOutDates = await getBookings(rental._id);
     }
 
     handleGuestsChange = (event) => {
@@ -45,9 +51,19 @@ class BookingReserve extends React.Component{
             }
         })
     }
+
+    // startAt: 2020/03/03 - endAt: 2020/03/15
+    // startAt: 2020/03/07 should not be a valid date
     checkInvalidDates = (date) => {
         // if date is invalid return true
-        return date < moment().add(-1, 'days');
+        let isBookedDate = false;
+        // iterate
+        isBookedDate = this.bookedOutDates.some(booking => {
+            return moment
+                .range(booking.startAt, booking.endAt)
+                .contains(date)
+        })
+        return date < moment().add(-1, 'days') || isBookedDate;
     }
 
     onProcessData = () => {
