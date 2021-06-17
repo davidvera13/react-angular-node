@@ -1,5 +1,17 @@
-const Rental = require('../models/rental.model')
+const Rental = require('../models/rental.model');
+const Booking = require('../models/booking.model');
 
+exports.getBookings = async (req, res) => {
+    const { rental } = req.query;
+    const query = rental ? Booking.find({rental}) : Booking.find({});
+
+    try {
+        const bookings = await query.select('startAt endAt -_id').exec();
+        return res.json(bookings);
+    } catch (error) {
+        return res.mongoError(error);
+    }
+}
 
 exports.getRentals = (req, res) => {
     Rental.find({}, (error, rentals) => {
