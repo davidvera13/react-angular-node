@@ -1,7 +1,6 @@
 import axios from 'axios';
 import axiosService from '../../services/AxiosService';
 import {extractApiErrors} from "./index";
-
 const { bookingAxios } = axiosService;
 
 // Auth action

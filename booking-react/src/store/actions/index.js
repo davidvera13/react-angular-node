@@ -1,8 +1,3 @@
-import axios from 'axios';
-import axiosService from '../../services/AxiosService';
-const { bookingAxios } = axiosService;
-
-
 export const extractApiErrors = (resError) => {
     let errors = [{title: 'Error!', detail: 'Oooops, something went wrong! '}];
     if( resError && resError.data && resError.data.errors) {
@@ -13,5 +8,5 @@ export const extractApiErrors = (resError) => {
 
 export * from './auth.action';
 export * from './rentals.action';
-
+export * from './bookings.action';
 

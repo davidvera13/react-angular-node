@@ -1,5 +1,5 @@
-import axios from 'axios';
 import axiosService from '../../services/AxiosService';
+// import {extractApiErrors} from "./index";
 const { bookingAxios } = axiosService;
 
 // we define the type and associate payload

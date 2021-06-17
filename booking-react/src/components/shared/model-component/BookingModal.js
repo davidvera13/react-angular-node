@@ -41,7 +41,7 @@ const BookingModal = ({
                     <button
                         type='button'
                         className='btn btn-booking-main '
-                        onClick={onSubmit}
+                        onClick={() => onSubmit(() => setIsOpen(false))}
                     >
                         Confirm
                     </button>

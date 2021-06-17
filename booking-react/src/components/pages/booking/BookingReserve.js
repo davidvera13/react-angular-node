@@ -3,6 +3,8 @@ import DateRangePicker from "react-bootstrap-daterangepicker";
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
 import BookingModal from "../../shared/model-component/BookingModal";
+import { createBooking } from "../../../store/actions";
+
 const moment = extendMoment(Moment);
 
 // //    "react-bootstrap-daterangepicker": "^7.0.0",
@@ -24,7 +26,7 @@ class BookingReserve extends React.Component{
         this.setState({
             proposedBooking: {
                 ...this.state.proposedBooking,
-                guests: event.target.value
+                guests: parseInt(event.target.value, 10)
             }
         })
     }
@@ -54,7 +56,8 @@ class BookingReserve extends React.Component{
             proposedBooking: {
                 ...this.state.proposedBooking,
                 nights: this.nights,
-                totalPrice: this.totalPrice
+                price: this.totalPrice,
+                rental: this.props.rental
             }
         })
     }
@@ -79,8 +82,19 @@ class BookingReserve extends React.Component{
         return startAt && endAt && guests;
     }
 
-    makeBooking = () => {
-        alert(JSON.stringify(this.state))
+    createRentalBooking = (closeCallback) => {
+        // create booking here
+        // alert(JSON.stringify(this.state))
+        createBooking(this.state.proposedBooking)
+            .then(createdBooking => {
+                // console.log(createdBooking);
+                alert('Success');
+                closeCallback();
+            })
+            .catch((error) => {
+                console.log(error);
+                alert('Error' + error);
+            })
     }
 
     formattedDate = () => {
@@ -90,7 +104,7 @@ class BookingReserve extends React.Component{
 
     render() {
         const { rental } = this.props;
-        const { proposedBooking: { nights, guests, totalPrice}} = this.state;
+        const { proposedBooking: { nights, guests, price}} = this.state;
 
         return (
             <div className='booking'>
@@ -135,7 +149,7 @@ class BookingReserve extends React.Component{
 
                 {/* passing button as a prop */}
                 <BookingModal
-                    onSubmit={this.makeBooking}
+                    onSubmit={this.createRentalBooking}
                     title="Booking confirmation"
                     subtitle={"Date : " + this.formattedDate() }
                     openBtn={
@@ -149,7 +163,7 @@ class BookingReserve extends React.Component{
                     {/*<p className='modal-subtitle'>Date : {this.formattedDate()}</p>*/}
                     <em>{nights} </em>Nights / <em>$ {rental.dailyPrice}</em> per night
                     <p>Guests : { guests }</p>
-                    <p>Price : <em>$ { totalPrice }</em></p>
+                    <p>Price : <em>$ { price }</em></p>
                     <p>Do you confirm your booking ?</p>
                 </BookingModal>
 
