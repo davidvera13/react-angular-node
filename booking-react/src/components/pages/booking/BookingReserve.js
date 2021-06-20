@@ -1,9 +1,12 @@
 import React from "react";
 import DateRangePicker from "react-bootstrap-daterangepicker";
+
 import Moment from 'moment';
+import ApiErrors from "../auth-component/forms/ApiErrors";
 import { extendMoment } from 'moment-range';
 import BookingModal from "../../shared/model-component/BookingModal";
 import { createBooking, getBookings } from "../../../store/actions";
+import { ToastContainer, toast } from 'react-toastify';
 
 const moment = extendMoment(Moment);
 
@@ -14,6 +17,7 @@ class BookingReserve extends React.Component{
         this.bookedOutDates = [];
         this.dateRef = React.createRef();
         this.state = {
+            errors: [],
             proposedBooking: {
                 guests: '',
                 startAt: null,
@@ -104,13 +108,30 @@ class BookingReserve extends React.Component{
         createBooking(this.state.proposedBooking)
             .then(createdBooking => {
                 // console.log(createdBooking);
-                alert('Success');
+                this.bookedOutDates.push(createdBooking);
+                this.resetData();
+                // alert('Success');
+                toast.success("Booking has been created", {
+                    autoClose: 4000,
+                    position: toast.POSITION.TOP_RIGHT
+                })
                 closeCallback();
             })
-            .catch((error) => {
-                console.log(error);
-                alert('Error' + error);
+            .catch((errors) => {
+                // console.log(error);
+                // alert('Error' + error);
+                this.setState({errors});
             })
+    }
+
+    resetData = () => {
+        this.dateRef.current.value = "";
+        this.setState({
+            errors: [],
+            proposedBooking: {
+                guests: '', startAt: null, endAt: null
+            }
+        })
     }
 
     formattedDate = () => {
@@ -120,7 +141,10 @@ class BookingReserve extends React.Component{
 
     render() {
         const { rental } = this.props;
-        const { proposedBooking: { nights, guests, price}} = this.state;
+        const {
+            errors,
+            proposedBooking: { nights, guests, price}
+        } = this.state;
 
         return (
             <div className='booking'>
@@ -176,11 +200,15 @@ class BookingReserve extends React.Component{
                         </button>
                     }
                 >
-                    {/*<p className='modal-subtitle'>Date : {this.formattedDate()}</p>*/}
-                    <em>{nights} </em>Nights / <em>$ {rental.dailyPrice}</em> per night
-                    <p>Guests : { guests }</p>
-                    <p>Price : <em>$ { price }</em></p>
-                    <p>Do you confirm your booking ?</p>
+                    <div className="mb-2">
+                        {/*<p className='modal-subtitle'>Date : {this.formattedDate()}</p>*/}
+                        <em>{nights} </em>Nights / <em>$ {rental.dailyPrice}</em> per night
+                        <p>Guests : { guests }</p>
+                        <p>Price : <em>$ { price }</em></p>
+                        <p>Do you confirm your booking ?</p>
+                        <p>&nbsp;</p>
+                    </div>
+                    <ApiErrors errors = {errors} />
                 </BookingModal>
 
                 <hr></hr>

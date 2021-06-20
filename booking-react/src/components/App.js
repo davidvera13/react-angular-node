@@ -7,6 +7,7 @@ import Routes from "./router/Routes";
 import { Provider } from 'react-redux';
 import { AuthProvider, useAuth } from "../providers/auth.provider";
 import { MapProvider } from "../providers/map.provider";
+import {ToastContainer} from "react-toastify";
 
 const store = initStore();
 const Providers = ({ children }) =>
@@ -35,6 +36,7 @@ const App = () => {
 
     return (
         <Providers>
+            <ToastContainer />
             <BookingApp />
         </Providers>
     )
