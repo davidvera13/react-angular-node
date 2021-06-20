@@ -25,18 +25,23 @@ exports.getRentals = (req, res) => {
     })
 };
 
-exports.getRental = (req, res) => {
+exports.getRental = async (req, res) => {
     // const rentalId = req.params.rentalId;
     const {rentalId} = req.params;
-    Rental.findById(rentalId, (error, rental) => {
-        if (error) {
-            // return Rental.sendError(res, { status: 422, detail: 'Cannot retrieve rental data' })
-            return res.mongoError(error);
-        } else {
-            return res.json(rental)
-        }
-
-    })
+    try {
+        const rental = await Rental.findById(rentalId).populate('owner', '-password -_id -email');
+        return res.json(rental);
+    } catch (error) {
+        return res.mongoError(error);
+    }
+    // Rental.findById(rentalId, (error, rental) => {
+    //     if (error) {
+    //         // return Rental.sendError(res, { status: 422, detail: 'Cannot retrieve rental data' })
+    //         return res.mongoError(error);
+    //     } else {
+    //         return res.json(rental)
+    //     }
+    // })
 };
 
 exports.createRental = (req, res) => {
@@ -80,7 +85,7 @@ exports.createRental = (req, res) => {
 
 
 // middlewares
-exports.isUserRentalOwnerMiddleware = (req, res, next) => {
+ exports.isUserRentalOwnerMiddleware = (req, res, next) => {
     const {rental} = req.body;
     const user = res.locals.user;
 
