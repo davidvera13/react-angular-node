@@ -7,6 +7,7 @@ import { extendMoment } from 'moment-range';
 import BookingModal from "../../shared/model-component/BookingModal";
 import { createBooking, getBookings } from "../../../store/actions";
 import { ToastContainer, toast } from 'react-toastify';
+import {Link} from "react-router-dom";
 
 const moment = extendMoment(Moment);
 
@@ -140,7 +141,7 @@ class BookingReserve extends React.Component{
     }
 
     render() {
-        const { rental } = this.props;
+        const { rental, isAuth } = this.props;
         const {
             errors,
             proposedBooking: { nights, guests, price}
@@ -155,61 +156,75 @@ class BookingReserve extends React.Component{
                     </span>
                 </h3>
                 <hr></hr>
-                <div className='form-group'>
-                    <label htmlFor='dates'>Dates</label>
-                    <DateRangePicker
-                        onApply={this.handleApply}
-                        opens="left"
-                        containerStyles={{display: 'block'}}
-                        isInvalidDate={this.checkInvalidDates}>
-                        <input
-                            ref={this.dateRef}
-                            id="dates"
-                            type="text"
-                            className="form-control">
-                        </input>
-                    </DateRangePicker>
+                {!isAuth &&
+                <div>
+                    <Link
+                        to ={{pathname: '/login'}}
+                        className="btn btn-booking-main btn-block">
+                        Please login
+                    </Link>
                 </div>
-                <div className='form-group'>
-                    <label htmlFor='guests'>Guests</label>
-                    <input
-                        onChange={this.handleGuestsChange}
-                        value={guests}
-                        type='number'
-                        className='form-control'
-                        id='guests'
-                        aria-describedby='guests'>
-                    </input>
-                </div>
-                {/*<button*/}
-                {/*    onClick={this.makeBooking}*/}
-                {/*    className='btn btn-bwm-main btn-block'>Reserve place now*/}
-                {/*</button>*/}
+                }
+                {isAuth &&
+                    <>
+                        <div className='form-group'>
+                            <label htmlFor='dates'>Dates</label>
+                            <DateRangePicker
+                                onApply={this.handleApply}
+                                opens="left"
+                                containerStyles={{display: 'block'}}
+                                isInvalidDate={this.checkInvalidDates}>
+                                <input
+                                    ref={this.dateRef}
+                                    id="dates"
+                                    type="text"
+                                    className="form-control">
+                                </input>
+                            </DateRangePicker>
+                        </div>
+                        <div className='form-group'>
+                            <label htmlFor='guests'>Guests</label>
+                            <input
+                                onChange={this.handleGuestsChange}
+                                value={guests}
+                                type='number'
+                                className='form-control'
+                                id='guests'
+                                aria-describedby='guests'>
+                            </input>
+                        </div>
+                        {/*<button*/}
+                        {/*    onClick={this.makeBooking}*/}
+                        {/*    className='btn btn-bwm-main btn-block'>Reserve place now*/}
+                        {/*</button>*/}
 
 
-                {/* passing button as a prop */}
-                <BookingModal
-                    onSubmit={this.createRentalBooking}
-                    title="Booking confirmation"
-                    subtitle={"Date : " + this.formattedDate() }
-                    openBtn={
-                        <button
-                            onClick={this.onProcessData}
-                            disabled={!this.isBookingValid}
-                            className='btn btn-bwm-main btn-block'>Reserve place now
-                        </button>
-                    }
-                >
-                    <div className="mb-2">
-                        {/*<p className='modal-subtitle'>Date : {this.formattedDate()}</p>*/}
-                        <em>{nights} </em>Nights / <em>$ {rental.dailyPrice}</em> per night
-                        <p>Guests : { guests }</p>
-                        <p>Price : <em>$ { price }</em></p>
-                        <p>Do you confirm your booking ?</p>
-                        <p>&nbsp;</p>
-                    </div>
-                    <ApiErrors errors = {errors} />
-                </BookingModal>
+                        {/* passing button as a prop */}
+                        <BookingModal
+                            onSubmit={this.createRentalBooking}
+                            title="Booking confirmation"
+                            subtitle={"Date : " + this.formattedDate()}
+                            openBtn={
+                                <button
+                                    onClick={this.onProcessData}
+                                    disabled={!this.isBookingValid}
+                                    className='btn btn-bwm-main btn-block'>Reserve place now
+                                </button>
+                            }
+                        >
+                            <div className="mb-2">
+                                {/*<p className='modal-subtitle'>Date : {this.formattedDate()}</p>*/}
+                                <em>{nights} </em>Nights / <em>$ {rental.dailyPrice}</em> per night
+                                <p>Guests : {guests}</p>
+                                <p>Price : <em>$ {price}</em></p>
+                                <p>Do you confirm your booking ?</p>
+                                <p>&nbsp;</p>
+                            </div>
+                            <ApiErrors errors={errors}/>
+                        </BookingModal>
+                    </>
+                }
+
 
                 <hr></hr>
                 <p className='booking-note-title'>People are interested into this house</p>

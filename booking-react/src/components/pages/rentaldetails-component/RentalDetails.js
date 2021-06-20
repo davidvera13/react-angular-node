@@ -29,7 +29,7 @@ class RentalDetails extends React.Component {
     }
 
     render() {
-        const { rental, isFetching } = this.props;
+        const { rental, isFetching, isAuth } = this.props;
         if (isFetching || !rental._id) {
             // we can add loader
             return null;
@@ -54,7 +54,7 @@ class RentalDetails extends React.Component {
                         </div>
                         <div className="col-md-4">
                             BOOKING
-                            <BookingReserve rental={rental} />
+                            <BookingReserve rental={rental} isAuth={ isAuth }/>
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@ class RentalDetails extends React.Component {
     }
 }
 
-const mapStateToProps = ({rental}) => ({ rental: rental.item, isFetching: rental.isFetching })
+const mapStateToProps = ({rental, auth: { isAuth}}) => ({ rental: rental.item, isFetching: rental.isFetching, isAuth })
 
 const RentalDetailWithRouter = withRouter(RentalDetails);
 export default connect(mapStateToProps)(RentalDetailWithRouter);
