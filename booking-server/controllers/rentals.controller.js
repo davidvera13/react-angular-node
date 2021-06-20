@@ -13,16 +13,26 @@ exports.getBookings = async (req, res) => {
     }
 }
 
-exports.getRentals = (req, res) => {
-    Rental.find({}, (error, rentals) => {
-        if (error) {
-            // return Rental.sendError(res, { status: 422, detail: 'Cannot retrieve rental data' });
-            return res.mongoError(error);
-        } else {
-            // return results
-            return res.json(rentals)
-        }
-    })
+exports.getRentals = async (req, res) => {
+    //const city = req.query.city
+    const {city} = req.query;
+    const query = city ? { city: city.toLowerCase() } : {}
+    try {
+        const rentals = await Rental.find(query);
+        return res.json(rentals)
+    } catch (error) {
+        return res.mongoError(error);
+    }
+
+    // Rental.find({}, (error, rentals) => {
+    //     if (error) {
+    //         // return Rental.sendError(res, { status: 422, detail: 'Cannot retrieve rental data' });
+    //         return res.mongoError(error);
+    //     } else {
+    //         // return results
+    //         return res.json(rentals)
+    //     }
+    // })
 };
 
 exports.getRental = async (req, res) => {

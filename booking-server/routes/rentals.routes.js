@@ -13,6 +13,7 @@ const {
 const { isUserAuthenticatedMiddleware } = require('../controllers/users.controller');
 
 // requests
+// api/v1/rentals?city=Berlin
 router.get('/', getRentals);
 router.get('/:rentalId', getRental);
 router.post('/', isUserAuthenticatedMiddleware, createRental);
