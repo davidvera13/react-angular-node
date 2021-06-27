@@ -1,7 +1,7 @@
 @import "colors";
 @import 'rental-detail';
 @import 'forms';
-
+@import "date-picker";
 
 html, body {
   height: 100%;
@@ -25,13 +25,13 @@ html, body, p {
 }
 
 .booking-btn-main {
-  border-color: $dark-red-color;
+  border-color: $dark-red-color !important;
   color: $dark-red-color;
 
   &:hover, &:focus, &:active {
     background-color: $dark-red-color;
     border-color: $dark-red-color;
-    color: white;
+    color: white !important;
     box-shadow: none;
   }
   &:disabled {

@@ -25,6 +25,8 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.4.1",
     "moment": "^2.29.1",
+    "ngx-daterangepicker-material": "^5.0.0",
+    "ngx-daterangepicker-material-dayjs": "^4.0.7",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"

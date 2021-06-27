@@ -82,7 +82,9 @@
         </div>
       </div>
       <div class="col-md-4">
-        BOOKING
+        <app-rental-booking
+          [isAuth]="auth.isAuthenticated">
+        </app-rental-booking>
       </div>
     </div>
   </div>

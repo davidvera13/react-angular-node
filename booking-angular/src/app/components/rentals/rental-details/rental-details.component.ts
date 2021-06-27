@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {RentalService} from '../../../services/rental.service';
 import {RentalModel} from '../../../shared/rental.model';
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-rentals-details',
@@ -15,7 +16,8 @@ export class RentalDetailsComponent implements OnInit {
   // location: string;
 
   constructor(private route: ActivatedRoute,
-              private rentalService: RentalService) { }
+              private rentalService: RentalService,
+              public auth: AuthService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {

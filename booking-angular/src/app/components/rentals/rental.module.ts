@@ -10,12 +10,15 @@ import {FirstUpperLetterPipe} from '../../pipes/firstUpperLetter.pipe';
 import {HighlightDirective} from '../../directives/custom.directive';
 import {NgCustomIfDirective} from '../../directives/ng-custom-if.directive';
 import {NgCustomForDirective} from '../../directives/ng-custom-for.directive';
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+
 // import {HttpClientModule} from "@angular/common/http";
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import {AuthGuard} from "../../guards/auth.guard";
 import {MapModule} from "../map/map.module";
 import { RentalsNewComponent } from './rentals-new/rentals-new.component';
 import {FormsModule} from "@angular/forms";
+import { RentalBookingComponent } from './rental-details/rental-booking/rental-booking.component';
 
 const routes: Routes = [
   {
@@ -41,14 +44,16 @@ const routes: Routes = [
     NgCustomIfDirective,
     NgCustomForDirective,
     LandingPageComponent,
-    RentalsNewComponent
+    RentalsNewComponent,
+    RentalBookingComponent
   ],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
     // HttpClientModule,
     MapModule,
-    FormsModule
+    FormsModule,
+    NgxDaterangepickerMd.forRoot()
   ]
 })
 export class RentalModule { }
