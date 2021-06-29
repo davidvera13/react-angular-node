@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {BookingResponse} from "../../../../shared/bookingResponse.model";
 import {Moment} from "moment";
+import {RentalModel} from "../../../../shared/rental.model";
 
 
 @Component({
@@ -10,6 +11,7 @@ import {Moment} from "moment";
 })
 export class RentalBookingComponent implements OnInit {
   @Input('isAuth') isAuth = false;
+  @Input('rental') rental: RentalModel;
   booking: BookingResponse;
   selected: {startDate: any, endDate: any};
   locale = {
@@ -26,31 +28,31 @@ export class RentalBookingComponent implements OnInit {
   }
 
   rentalBooking(): void {
-    alert(JSON.stringify(this.selected))
+    debugger;
+    // alert(JSON.stringify(this.selected))
+    alert(JSON.stringify(this.booking))
   }
 
 
   updatedBookingDates({startDate, endDate}: any) {
     if (!startDate || !endDate) { return; }
-    debugger;
+    if(startDate.isSame(endDate, 'days')) {
+      this.selected = null;
+      alert('invalid dates')
+    }
     this.booking.startAt = startDate.format();
     this.booking.endAt = endDate.format();
-    alert(JSON.stringify(this.booking))
+    this.booking.nights = endDate.diff(startDate, 'days');
+    this.booking.price = this.rental.dailyPrice * this.booking.nights;
 
-
-    // alert(moment(startDate).utc().format('YYYY/MM/DD hh:mm:ss') +
-    //   " " + moment(endDate).utc().format('YYYY/MM/DD hh:mm:ss'))
+    // alert(JSON.stringify(this.booking))
   }
 
-  // updatedBookingDates(dates: any) {
-  //   if (!dates.startDate || !dates.endDate) { return; }
-  //
-  //   this.booking.startAt = dates.startDate.format();
-  //   this.booking.endAt = dates.endDate.format();
-  //   alert(JSON.stringify(this.booking))
-  //
-  //
-  //   alert(moment(dates.startDate).utc().format('YYYY/MM/DD hh:mm:ss') +
-  //     " " + moment(dates.endDate).utc().format('YYYY/MM/DD hh:mm:ss'))
-  // }
+  get canOpenConfirmation(): boolean {
+    return this.booking.startAt &&
+      this.booking.endAt &&
+      this.booking.guests &&
+      this.booking.guests > 0;
+  }
+
 }
