@@ -1,14 +1,15 @@
 <div class="booking">
   <h3 class="booking-price">${{ rental.dailyPrice }} <span class="booking-per-night">per night</span></h3>
   <hr>
-  <!-- TODO: if is authenticated -->
   <ng-container *ngIf="isAuth">
     <form>
       <label>Dates</label>
       <input
-        type="text" ngxDaterangepickerMd
+        type="text"
+        ngxDaterangepickerMd
         [(ngModel)]="selected"
         name="daterange"
+        [isInvalidDate]="checkDateIsInvalid"
         (datesUpdated)="updatedBookingDates($event)"
         [locale]="locale"
         class="form-control"/>
@@ -22,15 +23,15 @@
                name="guests">
       </div>
     </form>
+    <!--      (click)="rentalBooking()"-->
     <button
-      (click)="rentalBooking()"
+      (click)="openConfirmationModal()"
       [disabled]="!canOpenConfirmation"
       class="btn btn-danger btn-confirm btn-block">
       Reserve place now
     </button>
     <hr>
   </ng-container>
-  <!-- TODO: if is NOT authenticated -->
   <div *ngIf="!isAuth" class="should-login">
     <a class="btn booking-btn-main" routerLink="/login">Login and book this place today</a>
   </div>
@@ -39,3 +40,41 @@
     More than 500 people checked this rental in last month.
   </p>
 </div>
+
+<ngx-smart-modal #confirmationModal identifier="confirmationModal">
+  <div class="modal-header">
+    <h4 class="modal-title">Confirm Booking
+      <p>
+        {{ timeService.format(booking.startAt) }} to
+        {{ timeService.format(booking.endAt) }}
+      </p>
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="confirmationModal.close()">
+    </button>
+  </div>
+  <div class="modal-body">
+    <em>{{ booking.nights }}</em> nights /
+    <em>$ {{ rental.dailyPrice}}</em> per Night
+    <p>Guests: <em>{{ booking.guests }}</em></p>
+    <!-- Total Price -->
+    <p>Price: <em>$ {{ booking.price }}</em></p>
+    <p>Do you confirm booking for selected days?</p>
+  </div>
+  <!-- <div *ngIf="errors.length > 0" class="alert alert-danger modal-error">
+    <p *ngFor="let error of errors">
+      {{error.detail}}
+    </p>
+  </div> -->
+  <div class="modal-footer">
+    <button  type="button" class="btn bwm-btn-main">Confirm</button>
+    <button
+      type="button"
+      class="btn"
+      (click)="confirmationModal.close()">Close
+    </button>
+  </div>
+</ngx-smart-modal>

@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {BookingResponse} from "../../../../shared/bookingResponse.model";
 import {Moment} from "moment";
 import {RentalModel} from "../../../../shared/rental.model";
+import {NgxSmartModalService} from "ngx-smart-modal";
+import {TimeService} from "../../../../services/time.service";
 
 
 @Component({
@@ -19,7 +21,8 @@ export class RentalBookingComponent implements OnInit {
   }
 
 
-  constructor() { }
+  constructor(public ngxSmartModalService: NgxSmartModalService,
+              public timeService: TimeService) { }
 
   ngOnInit(): void {
     this.booking = new BookingResponse();
@@ -54,5 +57,13 @@ export class RentalBookingComponent implements OnInit {
       this.booking.guests &&
       this.booking.guests > 0;
   }
+  openConfirmationModal(): void {
+    this.ngxSmartModalService.getModal("confirmationModal").open()
+  }
 
+  // doesn't work as classic function
+  checkDateIsInvalid = (date:Moment): boolean => {
+    return this.timeService.isPastDate(date);
+    // return true;
+  }
 }

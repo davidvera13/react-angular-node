@@ -19,6 +19,7 @@ import {MapModule} from "../map/map.module";
 import { RentalsNewComponent } from './rentals-new/rentals-new.component';
 import {FormsModule} from "@angular/forms";
 import { RentalBookingComponent } from './rental-details/rental-booking/rental-booking.component';
+import {NgxSmartModalModule} from "ngx-smart-modal";
 
 const routes: Routes = [
   {
@@ -53,7 +54,8 @@ const routes: Routes = [
     // HttpClientModule,
     MapModule,
     FormsModule,
-    NgxDaterangepickerMd.forRoot()
+    NgxDaterangepickerMd.forRoot(),
+    NgxSmartModalModule.forRoot()
   ]
 })
 export class RentalModule { }
