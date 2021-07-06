@@ -1,6 +1,6 @@
 import {RentalModel} from "./rental.model";
 
-export class BookingResponse {
+export class Booking {
   _id: number;
   startedAt: string;
   price: number;

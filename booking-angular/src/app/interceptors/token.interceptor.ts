@@ -13,29 +13,23 @@ import {DOCUMENT} from "@angular/common";
 export class TokenInterceptor implements HttpInterceptor {
   private readonly pathName: string;
 
-  constructor(private authService: AuthService,
-              @Inject(DOCUMENT) private document: Document) {
-    this.pathName = document.location.protocol +'//'
-      + document.location.hostname + ':'
-      + this.document.location.port + '/'
-      + this.document.location.pathname;
-}
+  constructor(private auth: AuthService) {}
+
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    debugger
-    console.log("In TokenInterceptor > intercept");
-    console.log(!request.url.includes(this.pathName));
-    if(!request.url.includes(this.pathName)) {
+    if (request.url.includes('api.tomtom.com')) {
       return next.handle(request);
     }
-    const token = this.authService.authToken;
+
+    const token = this.auth.authToken;
     if (token) {
       request = request.clone({
         setHeaders: {
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`
         }
-      })
+      });
     }
+
     return next.handle(request);
   }
 }

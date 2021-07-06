@@ -44,14 +44,6 @@ exports.getRental = async (req, res) => {
     } catch (error) {
         return res.mongoError(error);
     }
-    // Rental.findById(rentalId, (error, rental) => {
-    //     if (error) {
-    //         // return Rental.sendError(res, { status: 422, detail: 'Cannot retrieve rental data' })
-    //         return res.mongoError(error);
-    //     } else {
-    //         return res.json(rental)
-    //     }
-    // })
 };
 
 exports.createRental = (req, res) => {
@@ -98,6 +90,13 @@ exports.createRental = (req, res) => {
  exports.isUserRentalOwnerMiddleware = (req, res, next) => {
     const {rental} = req.body;
     const user = res.locals.user;
+
+    if(!rental) {
+        return res.apiError({
+            title: 'Booking Error',
+            detail: 'Cannot create rental'
+        })
+    }
 
     Rental.findById(rental)
         .populate('owner')
