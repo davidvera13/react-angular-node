@@ -9,6 +9,8 @@ import {AuthModule} from "./components/auth/auth.module";
 import {MapModule} from "./components/map/map.module";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {TokenInterceptor} from "./interceptors/token.interceptor";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ToastrModule} from "ngx-toastr";
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import {TokenInterceptor} from "./interceptors/token.interceptor";
     HttpClientModule,
     RentalModule,
     AuthModule,
-    MapModule
+    MapModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     {

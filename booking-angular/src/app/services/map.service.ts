@@ -32,7 +32,6 @@ export class MapService {
   }
 
   getGeoPosition(location: string): Observable<GeoPositionResponse> {
-    debugger;
     const cachedLocation = this.getCachedLocation(location)
     console.log('cachedLocation: ', cachedLocation);
     // of = Observable of cachedlocation
@@ -49,7 +48,6 @@ export class MapService {
       .pipe(map((res: MapResponseModel) => {
         const results = res.results;
         if (results && results.length > 0) {
-          debugger;
           // store in cache !
           const { position } = results[0];
           this.cacheLocation(location, position);
