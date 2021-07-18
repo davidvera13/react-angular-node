@@ -32,4 +32,8 @@ export class RentalService {
           return throwError( extractApiErrors(err) );
         }));
   }
+
+  getRentalsByCityName(city: string): Observable<RentalModel[]> {
+    return this.http.get<RentalModel[]>(`/api/v1/rentals?city=${city}`);
+  }
 }

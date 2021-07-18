@@ -5,8 +5,15 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <form class="form-inline my-2 my-lg-0 mr-auto">
-      <input class="form-control mr-sm-2 booking-search" type="search" placeholder="Search" aria-label="Search">
+      <input
+        #citySearch
+        (keyup.enter)="onSearch(citySearch.value)"
+        class="form-control mr-sm-2 booking-search"
+        type="search"
+        placeholder="Search"
+        aria-label="Search">
       <button
+        (click)="onSearch(citySearch)"
         class="btn my-2 my-sm-0 booking-btn-main"
         type="submit">Search</button>
     </form>
@@ -30,11 +37,6 @@
           <a class="nav-link" routerLink="/register">Register</a>
         </li>
       </ng-template>
-
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
-          Disabled</a>
-      </li>
     </ul>
   </div>
 </nav>

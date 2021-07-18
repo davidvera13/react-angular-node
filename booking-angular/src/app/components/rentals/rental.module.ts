@@ -20,6 +20,7 @@ import { RentalsNewComponent } from './rentals-new/rentals-new.component';
 import {FormsModule} from "@angular/forms";
 import { RentalBookingComponent } from './rental-details/rental-booking/rental-booking.component';
 import {NgxSmartModalModule} from "ngx-smart-modal";
+import { RentalsHomesComponent } from './rentals-homes/rentals-homes.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,7 @@ const routes: Routes = [
       { path: '', component: RentalsListingComponent},
       { path: 'new', component: RentalsNewComponent, canActivate: [AuthGuard]},
       { path: 'secret', component: LandingPageComponent, canActivate: [AuthGuard]},
+      { path: ':city/homes', component: RentalsHomesComponent},
       { path: ':rentalId', component: RentalDetailsComponent}
     ]},
 ];
@@ -46,7 +48,8 @@ const routes: Routes = [
     NgCustomForDirective,
     LandingPageComponent,
     RentalsNewComponent,
-    RentalBookingComponent
+    RentalBookingComponent,
+    RentalsHomesComponent
   ],
   imports: [
     RouterModule.forChild(routes),
